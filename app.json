@@ -1,7 +1,15 @@
 {
   "expo": {
-    "name": "CGGI",
-    "slug": "CGGI",
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
+        }
+      ]
+    ],
+    "name": "mobile-minga-mendez",
+    "slug": "mobile-minga-mendez",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
