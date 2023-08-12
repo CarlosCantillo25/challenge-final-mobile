@@ -19,11 +19,11 @@ const read_pag_appliances=createAsyncThunk(
             let {data} = await axios.get(`https://mobile-cggi.onrender.com/api/products/appliances?page=${page}`)
             console.log(data)
             return {
-                products: data.response, // Datos de productos y electrodomésticos
-                prevPage: data.prev,      // Valor prev
-                nextPage: data.next,      // Valor next
+                products: data.response, 
+                prevPage: data.prev,      
+                nextPage: data.next,     
                 totalPages: data.totalDocuments,
-                currentPage:data.currentPage // Total de páginas
+                currentPage:data.currentPage 
               };
             
         } catch (error) {
@@ -61,11 +61,11 @@ const read_pag_gamers=createAsyncThunk(
             let {data} = await axios.get(`https://mobile-cggi.onrender.com/api/products/gamers?page=${page}`)
             console.log(data)
             return {
-                products: data.response, // Datos de productos y electrodomésticos
-                prevPage: data.prev,      // Valor prev
-                nextPage: data.next,      // Valor next
+                products: data.response, 
+                prevPage: data.prev,      
+                nextPage: data.next,      
                 totalPages: data.totalDocuments,
-                currentPage:data.currentPage // Total de páginas
+                currentPage:data.currentPage
               };
             
         } catch (error) {

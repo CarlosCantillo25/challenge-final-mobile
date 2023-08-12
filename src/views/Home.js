@@ -4,13 +4,19 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from 'react-redux';
 import productsActions from "../../redux/actions/productsActions";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { ImageBackground, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { ImageBackground, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
+
 
 export default function HomeScreen() {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchText, setSearchText] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const read_products = useSelector((store) => store.products.products);
     const moreViews = read_products?.filter((elemento) => elemento.Moreview === true);
@@ -28,10 +34,67 @@ export default function HomeScreen() {
     const imagesElectro = moreViews.filter(item => item.type === "Fridge" || item.type === "Air" || item.type === "Kitchen" || item.type === "Blender" || item.type === "Laundry");
     const currentElectro= imagesElectro.slice(imagesPorSlide);
 
+    const searchQuery = async () => {
+        try {
+          const storedSearchTerm = await AsyncStorage.getItem('searchTerm');
+          return storedSearchTerm;
+        } catch (error) {
+          console.log('Error al obtener el término de búsqueda:', error);
+          return null;
+        }
+      };
+
+    const performSearch = () => {
+        if (searchTerm === '') {
+          setSearchResults([]);
+        } else {
+          const filtered = read_products.filter(
+            (product) =>
+              product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              product.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              product.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              product.category.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          setSearchResults(filtered);
+        }
+      };
+
+      const closeModal = () => {
+        setIsModalOpen(false);
+      };
+
+      const handleSearchClick = async () => {
+        if (searchTerm) {
+            closeModal();
+            performSearch();
+            await saveSearchResultsToAsyncStorage();
+            navigation.navigate('ResultProducts'); // Asegúrate de que 'ResultProducts' sea la ruta correcta
+        }
+        };
+
+    const handleEnterKey = async (event) => {
+        if (event.key === 'Enter' && searchTerm) {
+        closeModal();
+        performSearch();
+        await saveSearchResultsToAsyncStorage();
+        navigation.navigate('ResultProducts'); // Asegúrate de que 'ResultProducts' sea la ruta correcta
+        }
+    };
+      
+    const saveSearchResultsToAsyncStorage = async () => {
+        const matchingProductIds = searchResults.map((product) => product._id);
+        await AsyncStorage.setItem('search', JSON.stringify(matchingProductIds));
+        await AsyncStorage.setItem('searchTerm', JSON.stringify(searchTerm)); // Guardar el término de búsqueda
+    };
+
     useEffect(() => {
         dispatch(productsActions.read_products());
         checkLoginStatus();
     }, [dispatch]);
+
+    useEffect(() => {
+        performSearch();
+      }, [searchTerm]);
 
     const checkLoginStatus = async () => {
         try {
@@ -69,7 +132,34 @@ export default function HomeScreen() {
                             </TouchableOpacity>
                             <AntDesign name="shoppingcart" style={styles.logo} />
                         </View>
-                        <TextInput style={styles.searchInput} placeholder="Search..." value={searchText} onChangeText={handleSearchChange} />
+                        <View>
+                            <View style={{ position: 'relative', flexDirection: 'row', alignItems: 'center' }}>
+                                <TextInput style={styles.searchInput} placeholder="Find what you are looking for..." value={searchTerm} onChangeText={(text) => setSearchTerm(text)} />
+                                <TouchableOpacity style={{ position: 'absolute', right: 20 }} onPress={() => { setIsModalOpen(true); handleSearchClick(); }} >
+                                    <Ionicons name="search-outline" size={24} color="#fff" />
+                                </TouchableOpacity>
+                            </View>
+                            {searchResults.length > 0 && (
+                                <Modal animationType="slide" transparent={false} visible={isModalOpen}>
+                                    <View style={{ flex: 1, backgroundColor: 'white' }}>
+                                        <FlatList data={searchResults.slice(0, 5)} keyExtractor={(item) => item._id} renderItem={({ item }) => (
+                                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+                                                <Image source={{ uri: item.cover_photo[0] }} style={{ width: 48, height: 48 }} />
+                                                <Text>{item.title}</Text>
+                                            </TouchableOpacity> )} 
+                                        />
+                                        {searchResults.length > 5 && (
+                                            <TouchableOpacity style={{ alignItems: 'center', marginTop: 10 }}>
+                                                <Text style={{ color: '#007BFF' }} onPress={saveSearchResultsToAsyncStorage}> More Views </Text>
+                                            </TouchableOpacity> 
+                                        )}
+                                        <TouchableOpacity style={{ alignItems: 'center', marginTop: 10 }} onPress={closeModal}>
+                                            <Text style={{ color: '#007BFF' }}>Close</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </Modal>
+                            )}
+                        </View>
                     </View>
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity onPress={navigateHomeAppliancePage} style={styles.button}>
@@ -85,7 +175,7 @@ export default function HomeScreen() {
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
                         <Text style={{ fontSize: 20, color: 'white'  }}>More views on Phones & tabs</Text>
                         <ScrollView horizontal>
-                            <ScrollView horizontal style={{  }}>
+                            <ScrollView horizontal>
                                 {currentPhones.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
                                         <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
@@ -101,7 +191,7 @@ export default function HomeScreen() {
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
                         <Text style={{ fontSize: 20, color: 'white'  }}>More views on Desktops & Notebooks</Text>
                         <ScrollView horizontal>
-                            <ScrollView horizontal style={{  }}>
+                            <ScrollView horizontal>
                                 {currentDesktop.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
                                         <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
@@ -117,7 +207,7 @@ export default function HomeScreen() {
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
                         <Text style={{ fontSize: 20, color: 'white'  }}>More views on Gamers</Text>
                         <ScrollView horizontal>
-                            <ScrollView horizontal style={{  }}>
+                            <ScrollView horizontal>
                                 {currentGamers.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
                                         <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
@@ -133,7 +223,7 @@ export default function HomeScreen() {
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
                         <Text style={{ fontSize: 20, color: 'white'  }}>More views on Audio & Video</Text>
                         <ScrollView horizontal>
-                            <ScrollView horizontal style={{  }}>
+                            <ScrollView horizontal>
                                 {currentAudio.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
                                         <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
@@ -149,7 +239,7 @@ export default function HomeScreen() {
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
                         <Text style={{ fontSize: 20, color: 'white'  }}>More views on Appliances</Text>
                         <ScrollView horizontal>
-                            <ScrollView horizontal style={{  }}>
+                            <ScrollView horizontal>
                                 {currentElectro.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
                                         <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
@@ -205,6 +295,7 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 20,
         borderRadius: 8,
+        width: '80%'
     },
     buttonContainer: {
         flexDirection: 'row',
