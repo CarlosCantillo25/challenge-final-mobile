@@ -39,24 +39,25 @@ export default function ResultProducts() {
 
   return (
     <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
-      <View>
-        <View style={styles.nav1}>
-          <TouchableOpacity onPress={() => navigation.openDrawer()}>
-            <AntDesign name="bars" style={styles.menu} />
-          </TouchableOpacity>
-          <AntDesign name="shoppingcart" style={styles.logo} />
+      <View style={styles.container}>
+        <View style={styles.navbar}>
+          <View style={styles.nav1}>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <AntDesign name="bars" style={styles.menu} />
+            </TouchableOpacity>
+            <AntDesign name="shoppingcart" style={styles.logo} />
+          </View>
         </View>
-        <View style={{ flex: 1, paddingTop: 20 }}>
-          <Text style={{ fontSize: 20, marginLeft: 20 }}>Search Results for: {searchQuery}</Text>
-          <ScrollView contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+        <View style={{ flex: 1, paddingTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{ fontSize: 22, color:'white', marginBottom: 20 }}>Search Results for: {searchQuery}</Text>
+          <ScrollView>
+            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
               {filteredProducts.map((product) => (
-                <TouchableOpacity key={product._id} style={{ backgroundColor: 'white', borderRadius: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5, margin: 10 }} onPress={() => navigateToProduct(product._id)} >
-                  <Image source={{ uri: product.cover_photo[0] }} style={{ width: '100%', height: 200, borderTopLeftRadius: 10, borderTopRightRadius: 10 }} />
-                  <Text style={{ fontSize: 18, fontWeight: 'bold', margin: 10 }}>{product.brand}</Text>
-                  <Text style={{ color: 'gray', marginHorizontal: 10 }}>{product.title}</Text>
+                <TouchableOpacity key={product._id} style={styles.cardItem} onPress={() => navigateToProduct(product._id)} >
+                  <Image source={{ uri: product.cover_photo[0] }} style={styles.cardImage} />
+                  <Text style={{ color: 'gray', fontSize: 18, fontWeight: 'bold', marginHorizontal: 10 }}>{product.title}</Text>
                   <Text style={{ fontSize: 18, fontWeight: 'bold', margin: 10 }}>USD$ {product.price}</Text>
-                  <Text style={{ color: '#5ea85e', margin: 10 }}>Withdraw it NOW!</Text>
+                  <Text style={{ color: '#5ea85e', fontWeight: 'bold', fontSize: 20 , margin: 10 }}>Withdraw it NOW!</Text>
                 </TouchableOpacity>
               ))}
             </View>
@@ -120,23 +121,20 @@ const styles = StyleSheet.create({
       width: 40,
       resizeMode: 'contain',
   },
-  carouselButton: {
-      padding: 10,
-  },
-  carouselItem: {
+  cardItem: {
       justifyContent: 'justify-center',
       alignItems: 'center',
       backgroundColor: 'white',
-      height: 300,
-      width: 200,
+      width: '90%',
       borderRadius: 10,
       padding: 16,
       alignItems: 'center',
       margin: 10,
   },
-  carouselImage: {
-      width: 150,
-      height: 150,
+  cardImage: {
       resizeMode: 'contain',
+      width: 250,
+      height: 250,
+      marginBottom: 10
   },
 })

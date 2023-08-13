@@ -121,6 +121,10 @@ export default function HomeScreen() {
         navigation.navigate('TechsPage');
     };
 
+    const navigateToProductDetails = (productId) => {
+        navigation.navigate('ProductDetails', { productId });
+    };
+
     return (
         <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
             <ScrollView>
@@ -178,11 +182,13 @@ export default function HomeScreen() {
                             <ScrollView horizontal>
                                 {currentPhones.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
-                                        <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
-                                        <Text>{item.brand}</Text>
-                                        <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
-                                        <Text>USD$ {item.price}</Text>
-                                        <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        <TouchableOpacity key={item._id} style={styles.carouselItem} onPress={() => navigateToProductDetails(item._id)} >
+                                            <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
+                                            <Text>{item.brand}</Text>
+                                            <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
+                                            <Text>USD$ {item.price}</Text>
+                                            <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 ))}
                             </ScrollView>
@@ -194,11 +200,13 @@ export default function HomeScreen() {
                             <ScrollView horizontal>
                                 {currentDesktop.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
-                                        <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
-                                        <Text>{item.brand}</Text>
-                                        <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
-                                        <Text>USD$ {item.price}</Text>
-                                        <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        <TouchableOpacity key={item._id} style={styles.carouselItem} onPress={() => navigateToProductDetails(item._id)} >
+                                            <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
+                                            <Text>{item.brand}</Text>
+                                            <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
+                                            <Text>USD$ {item.price}</Text>
+                                            <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 ))}
                             </ScrollView>
@@ -210,11 +218,13 @@ export default function HomeScreen() {
                             <ScrollView horizontal>
                                 {currentGamers.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
-                                        <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
-                                        <Text>{item.brand}</Text>
-                                        <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
-                                        <Text>USD$ {item.price}</Text>
-                                        <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        <TouchableOpacity key={item._id} style={styles.carouselItem} onPress={() => navigateToProductDetails(item._id)} >
+                                            <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
+                                            <Text>{item.brand}</Text>
+                                            <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
+                                            <Text>USD$ {item.price}</Text>
+                                            <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 ))}
                             </ScrollView>
@@ -226,11 +236,13 @@ export default function HomeScreen() {
                             <ScrollView horizontal>
                                 {currentAudio.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
-                                        <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
-                                        <Text>{item.brand}</Text>
-                                        <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
-                                        <Text>USD$ {item.price}</Text>
-                                        <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        <TouchableOpacity key={item._id} style={styles.carouselItem} onPress={() => navigateToProductDetails(item._id)} >
+                                            <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
+                                            <Text>{item.brand}</Text>
+                                            <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
+                                            <Text>USD$ {item.price}</Text>
+                                            <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 ))}
                             </ScrollView>
@@ -242,11 +254,13 @@ export default function HomeScreen() {
                             <ScrollView horizontal>
                                 {currentElectro.map((item, index) => (
                                     <View key={item._id} style={styles.carouselItem}>
-                                        <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
-                                        <Text>{item.brand}</Text>
-                                        <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
-                                        <Text>USD$ {item.price}</Text>
-                                        <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        <TouchableOpacity key={item._id} style={styles.carouselItem} onPress={() => navigateToProductDetails(item._id)} >
+                                            <Image source={{ uri: item.cover_photo[0] }} style={styles.carouselImage} />
+                                            <Text>{item.brand}</Text>
+                                            <Text style={{ paddingHorizontal: 10, textAlign: 'center' }}>{item.title}</Text>
+                                            <Text>USD$ {item.price}</Text>
+                                            <Text style={{ fontSize: 16, color: 'green' }}>Withdraw it NOW!</Text>
+                                        </TouchableOpacity>
                                     </View>
                                 ))}
                             </ScrollView>
