@@ -5,13 +5,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeScreen from '../views/Home';
 import RegisterScreen from '../views/Register';
 import LoginScreen from '../views/Login';
+import HomeAppliances from '../views/HomeAppliances';
+import TechsPage from '../views/TechsPage';
+import GamersPage from '../views/GamersPage';
+import ControlPanel from '../views/ControlPanel'
+import ResultProducts from '../views/ResultProducts'
+import ProductDetails from '../views/ProductDetails'
 import StackNavigator from './NavigatorsStack';
+import { useNavigate } from 'react-router-dom';
 
 const getStoredUserInfo = async () => {
   try {
+    // Obtener el token almacenado en AsyncStorage.
     const token = await AsyncStorage.getItem('token');
+    // Obtener el objeto de usuario almacenado en AsyncStorage.
     const userJSON = await AsyncStorage.getItem('user');
-    const user = JSON.parse(userJSON);
+    const user = JSON.parse(userJSON); // Parsear la cadena JSON a un objeto JavaScript.
+    console.log('Token:', token);
+    console.log('User:', user);
+    // Devolver el token y el objeto de usuario para usarlos en otras partes de tu aplicación.
     return { token, user };
   } catch (error) {
     console.log(error.message);
@@ -25,6 +37,7 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     const getUserFromStorage = async () => {
       const storedUser = await getStoredUserInfo();
+      console.log(storedUser)
       setUser(storedUser?.user || null)
     };
     getUserFromStorage();
@@ -44,11 +57,13 @@ const CustomDrawerContent = (props) => {
   
   const handleLogout = async () => {
     await clearStoredUserInfo();
-    setUser(null);
+    setUser(null); // Establece el usuario a null para actualizar el contenido del drawer
   };
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props}screenOptions={{
+      headerShown:false
+     }} >
       <View style={styles.headerContainer}>
         <Image source={{ uri: user?.photo }} style={styles.userPhoto} />
         <Text style={styles.userName}>{user?.email}</Text>
@@ -80,16 +95,24 @@ const DrawerNavigator = () => {
 
   return (
     <>
-      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} screenOptions={{
+      headerShown:false
+     }} />}>
         {!userLoggedIn ? (
           <>
-            <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
+          <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
             <Drawer.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+            <Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
+            <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
+            <Drawer.Screen name="Home&Appliances" component={HomeAppliances} options={{ headerShown: false }} />
+            <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
+            <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }}/>
+            <Drawer.Screen name="Detail" component={ProductDetails} options={{ headerShown: false }}/>
             </>
         ) : (
           <>
-          <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
+          <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
+          <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
           </>
         )}
       </Drawer.Navigator>
