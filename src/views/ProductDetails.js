@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, ScrollView, Image } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { api, apiUrl, endpoints } from '../../utils/api'
 import { useRoute } from '@react-navigation/native';
@@ -11,10 +11,8 @@ const ProductDetails = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { productId } = route.params;
-  const {id} = productId
   const [product, setProduct] = useState(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const inputProduct = useRef()
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -41,9 +39,15 @@ const ProductDetails = () => {
     }
   };
 
+  const navigateToProductDetailView = (productId) => {
+    navigation.navigate('ProductDetailView', { productId });
+  };
+
+  const handleGoBack = () => {
+    navigation.navigate('Home');
+  };
 
   return (
-    <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
       <View style={styles.container}>
         <View style={styles.navbar}>
           <View style={styles.nav1}>
@@ -72,12 +76,24 @@ const ProductDetails = () => {
                   <Image source={require('../../assets/tienda.png')} style={styles.tienda} />
                   <Text style={styles.text}>Withdraw it NOW!</Text>
                 </View>
+                <View style={styles.container5}>
+                  <TouchableOpacity onPress={() => navigateToProductDetailView(productId)}>
+                    <Text style={styles.text2}>Technical characteristics</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.container4}>
+                  <TouchableOpacity>
+                    <Text style={styles.text1}>ADD TO CART</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           )}
+          <TouchableOpacity style={styles.buttonBack} onPress={handleGoBack}>
+            <Text style={styles.back}>GO TO BACK</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
-    </ImageBackground>
   )
 }
 
@@ -88,13 +104,10 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingTop: 20,
   },
-  imageBackground: {
-      flex: 1,
-      resizeMode: "cover", 
-  },
   navbar: {
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+    backgroundColor: '#007BFF',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   nav1: {
       flexDirection: 'row',
@@ -126,6 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 20,
     marginTop: 20,
+    marginBottom: 20
   },
   mainImage: {
     height: 250,
@@ -169,5 +183,46 @@ const styles = StyleSheet.create({
   container3: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  text1: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  container4: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    backgroundColor: 'green',
+    padding: 4,
+    borderRadius: 2
+  },
+  text2: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  container5: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+    backgroundColor: '#2A81FF',
+    padding: 4,
+    borderRadius: 2
+  },
+  back: {
+    color: 'white',
+    fontSize: 18,
+    backgroundColor: 'black',
+    width: 150,
+    textAlign: 'center',
+    padding: 10,
+    borderRadius: 10
+  },
+  buttonBack: {
+    alignSelf: 'center',
+    marginBottom: 20
   }
 })
