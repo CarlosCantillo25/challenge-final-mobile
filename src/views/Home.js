@@ -68,7 +68,7 @@ export default function HomeScreen() {
             closeModal();
             performSearch();
             await saveSearchResultsToAsyncStorage();
-            navigation.navigate('ResultProducts'); // Asegúrate de que 'ResultProducts' sea la ruta correcta
+            navigation.navigate('ResultProducts'); 
         }
         };
 
@@ -77,14 +77,14 @@ export default function HomeScreen() {
         closeModal();
         performSearch();
         await saveSearchResultsToAsyncStorage();
-        navigation.navigate('ResultProducts'); // Asegúrate de que 'ResultProducts' sea la ruta correcta
+        navigation.navigate('ResultProducts'); 
         }
     };
       
     const saveSearchResultsToAsyncStorage = async () => {
         const matchingProductIds = searchResults.map((product) => product._id);
         await AsyncStorage.setItem('search', JSON.stringify(matchingProductIds));
-        await AsyncStorage.setItem('searchTerm', JSON.stringify(searchTerm)); // Guardar el término de búsqueda
+        await AsyncStorage.setItem('searchTerm', JSON.stringify(searchTerm));
     };
 
     useEffect(() => {
