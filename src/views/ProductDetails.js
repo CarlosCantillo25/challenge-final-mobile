@@ -79,7 +79,7 @@ const ProductDetails = () => {
                 </View>
                 <View style={styles.container5}>
                   <TouchableOpacity onPress={() => navigateToProductDetailView(productId)}>
-                    <Text style={styles.text2}>View Details</Text>
+                    <Text style={styles.text2}>Technical characteristics</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.container4}>
