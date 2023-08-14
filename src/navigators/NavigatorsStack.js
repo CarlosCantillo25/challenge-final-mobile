@@ -15,7 +15,6 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="HomeAppliances" component={HomeAppliances} options={{ headerShown: false }}/>
             <Stack.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
             <Stack.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />

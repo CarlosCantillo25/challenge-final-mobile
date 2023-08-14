@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import StackNavigator from './NavigatorsStack';
 import RegisterScreen from '../views/Register';
 import LoginScreen from '../views/Login';
+import HomeScreen from '../views/Home';
 
 const getStoredUserInfo = async () => {
   try {
@@ -76,7 +77,7 @@ const DrawerNavigator = () => {
 
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
+      <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
       {!userLoggedIn && (
         <>
           <Drawer.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
