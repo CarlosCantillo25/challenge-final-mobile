@@ -11,6 +11,7 @@ import GamersPage from '../views/GamersPage';
 import ControlPanel from '../views/ControlPanel'
 import ResultProducts from '../views/ResultProducts'
 import ProductDetails from '../views/ProductDetails'
+import ProductDetailView from '../views/ProductDetailView';
 
 const getStoredUserInfo = async () => {
   try {
@@ -103,6 +104,7 @@ const DrawerNavigator = () => {
             <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
             <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />
             <Drawer.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
+            <Drawer.Screen name="ProductDetailView" component={ProductDetailView} options={{ headerShown: false }} />
           </>
         ) : (
           <>
@@ -113,6 +115,7 @@ const DrawerNavigator = () => {
           <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
           <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />
           <Drawer.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
+          <Drawer.Screen name="ProductDetailView" component={ProductDetailView} options={{ headerShown: false }} />
           </>
         )}
       </Drawer.Navigator>
