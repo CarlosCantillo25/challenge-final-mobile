@@ -1,114 +1,101 @@
 import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { showMessage } from "react-native-flash-message";
+import axios from 'axios';
+import { apiUrl, endpoints } from '../../utils/api';
 import AntDesign from "react-native-vector-icons/AntDesign";
-import menu from '../../assets/icono-menu.png';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image,} from "react-native";
 
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet,
-    ScrollView,
-    Image,
-} from "react-native";
-
-export default function RegisterScreen(props) {
+export default function LoginScreen() {
 
     const navigation = useNavigation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleEmailChange = (text) => {
-        setEmail(text);
-    };
-    const handlePasswordChange = (text) => {
-        setPassword(text);
-    };
-
-    const handleRegisterClick = async () => {
-        try {
-            const response = await fetch(
-                "",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email, photo, password }),
-                }
-            );
-
-            const data = await response.json();
-            showMessage({
-                message: "Success",
-                description: "User register!",
-                type: "success",
-                animated: true,
-                animationDuration: 800,
-                icon: { icon: "success", position: "right" },
-                style: { paddingVertical: 20, paddingHorizontal: 80 },
-            });
-            console.log("Registro exitoso:", data);
-        } catch (error) {
-            console.log("Error al registrar:", error);
+    function handleFormSubmit(event) {
+        event.preventDefault();
+      
+        if (!email || !password) {
+          alert('Please enter email and password.');
+          return;
         }
-    };
+      
+        let data = {
+          email: email,
+          password: password,
+        };
+      
+        axios.post(apiUrl + endpoints.login, data)
+        .then(res => {
+          if (res && res.data && res.data.response) {
+            const { user, photo, token } = res.data.response;
+    
+            AsyncStorage.setItem('token', token)
+            .then(() => {
+              if (user !== null && user !== undefined) {
+                return AsyncStorage.setItem('user', JSON.stringify(user));
+              }
+            })
+            .then(() => {
+              if (photo !== null && photo !== undefined) {
+                return AsyncStorage.setItem('photo', photo);
+              }
+            })
+            .then(() => {
+              alert('User signed in!');
+              navigation.navigate('Home');
+            })
+            .catch(error => {
+              console.log(error);
+              alert('An error occurred while saving data. Please try again later.');
+            });
+          
+          } else {
+            alert('Invalid response from the server');
+          }
+        })
+        .catch(error => {
+          if (error.response && error.response.data) {
+            const err = error.response.data.message || 'Unknown error';
+            alert(`Authentication failed! : ${err}`);
+          } else {
+            console.log(error.message)
+            alert('An error occurred. Please try again later.');
+          }
+        });
+      }
 
     return (
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.navbar}>
-                    <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
-                    <AntDesign name="bars" style={styles.logo} />
-                        
-                    </TouchableOpacity>
-                    <AntDesign name="shoppingcart" style={styles.logo} />
+                    <View style={styles.nav1}>
+                        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                            <AntDesign name="bars" style={styles.menu} />
+                        </TouchableOpacity>
+                        <AntDesign name="shoppingcart" style={styles.logo} />
+                    </View>
                 </View>
                 <View style={styles.content}>
                     <View style={styles.formContainer}>
                         <Text style={styles.label}>Email</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Email"
-                            value={email}
-                            onChangeText={handleEmailChange}
-                        />
+                        <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} keyboardType="email-address" />
                         <Text style={styles.label}>Password</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Password"
-                            value={password}
-                            onChangeText={handlePasswordChange}
-                            secureTextEntry={true}
-                        />
-                        <TouchableOpacity
-                            style={styles.registerButton}
-                            onPress={handleRegisterClick}
-                        >
+                        <TextInput style={styles.input} placeholder="Password" value={password} secureTextEntry={true} onChangeText={setPassword}  />
+                        <TouchableOpacity style={styles.registerButton} onPress={handleFormSubmit} >
                             <Text style={styles.buttonText}>Log in</Text>
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.linkText}>
                         Already have an account?
-                        <TouchableOpacity
-                            onPress={() => {
-                                navigation.navigate("Login");
-                            }}
-                        >
-                            <Text style={styles.link}>Sin up</Text>
+                        <TouchableOpacity onPress={() => { navigation.navigate("Login"); }} >
+                            <Text style={styles.link}> Sign up</Text>
                         </TouchableOpacity>
                     </Text>
 
                     <Text style={styles.linkText}>
                         Go back to
-                        <TouchableOpacity
-                            style={styles.link}
-                            onPress={() => {
-                                navigation.navigate("Home");
-                            }}
-                        >
+                        <TouchableOpacity style={styles.link} onPress={() => { navigation.navigate("Home"); }} >
                             <Text style={styles.link}> Home page</Text>
                         </TouchableOpacity>
                     </Text>
@@ -122,20 +109,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     navbar: {
+        backgroundColor: '#007BFF',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    nav1: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingTop: 20,
+        paddingHorizontal: 30,
+        paddingTop: 10,
     },
     logo: {
-        width: 54,
-        height: 32,
-        resizeMode: 'contain',
+        width: 55,
+        height: 55,
+        fontSize: 40,
+        color: 'white'
     },
     menu: {
         width: 55,
         height: 55,
+        fontSize: 40,
+        color: 'white'
     },
     content: {
         flex: 1,
@@ -149,7 +144,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     formContainer: {
-        width: "100%",
+        width: "80%",
+        marginTop: "20%",
     },
     label: {
         fontWeight: "bold",
@@ -157,14 +153,14 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 2,
-        borderColor: "#448cdf",
+        borderColor: "#007BFF",
         borderRadius: 10,
         paddingVertical: 5,
         paddingHorizontal: 10,
         marginBottom: 10,
     },
     registerButton: {
-        backgroundColor: "#448cdf",
+        backgroundColor: "#007BFF",
         paddingVertical: 10,
         borderRadius: 30,
         alignItems: "center",
@@ -180,6 +176,6 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     link: {
-        color: "#448cdf",
+        color: "#007BFF",
     },
 });
