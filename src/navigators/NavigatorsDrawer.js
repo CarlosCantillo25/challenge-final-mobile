@@ -12,6 +12,7 @@ import ControlPanel from '../views/ControlPanel'
 import ResultProducts from '../views/ResultProducts'
 import ProductDetails from '../views/ProductDetails'
 import StackNavigator from './NavigatorsStack';
+import { useNavigate } from 'react-router-dom';
 
 const getStoredUserInfo = async () => {
   try {
@@ -60,7 +61,9 @@ const CustomDrawerContent = (props) => {
   };
 
   return (
-    <DrawerContentScrollView {...props}>
+    <DrawerContentScrollView {...props}screenOptions={{
+      headerShown:false
+     }} >
       <View style={styles.headerContainer}>
         <Image source={{ uri: user?.photo }} style={styles.userPhoto} />
         <Text style={styles.userName}>{user?.email}</Text>
@@ -92,13 +95,19 @@ const DrawerNavigator = () => {
 
   return (
     <>
-      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} screenOptions={{
+      headerShown:false
+     }} />}>
         {!userLoggedIn ? (
           <>
-          <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
+          <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
             <Drawer.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
             <Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
             <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
+            <Drawer.Screen name="Home&Appliances" component={HomeAppliances} options={{ headerShown: false }} />
+            <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
+            <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }}/>
+            <Drawer.Screen name="Detail" component={ProductDetails} options={{ headerShown: false }}/>
             </>
         ) : (
           <>

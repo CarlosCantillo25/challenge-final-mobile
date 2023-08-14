@@ -4,6 +4,7 @@ import DrawerNavigator from './NavigatorsDrawer.js';
 import HomeAppliances from '../views/HomeAppliances.js';
 import TechsPage from '../views/TechsPage.js';
 import GamersPage from '../views/GamersPage.js';
+import ProductDetails from '../views/ProductDetails.js';
 const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
@@ -15,8 +16,8 @@ const StackNavigator = () => {
             <Stack.Screen name="Home&Appliances" component={HomeAppliances} />
             <Stack.Screen name="TechsPage" component={TechsPage} />
             <Stack.Screen name="GamersPage" component={GamersPage}/>
+            <Stack.Screen name="Detail" component={ProductDetails}/>
         </Stack.Navigator>
     )
 }
-
 export default StackNavigator
