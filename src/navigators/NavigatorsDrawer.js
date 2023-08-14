@@ -2,26 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { StyleSheet, Image, View, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import HomeScreen from '../views/Home';
+import StackNavigator from './NavigatorsStack';
 import RegisterScreen from '../views/Register';
 import LoginScreen from '../views/Login';
-import HomeAppliances from '../views/HomeAppliances';
-import TechsPage from '../views/TechsPage';
-import GamersPage from '../views/GamersPage';
-import ResultProducts from '../views/ResultProducts'
-import ProductDetails from '../views/ProductDetails'
-import ProductDetailView from '../views/ProductDetailView';
 
 const getStoredUserInfo = async () => {
   try {
-    // Obtener el token almacenado en AsyncStorage.
     const token = await AsyncStorage.getItem('token');
-    // Obtener el objeto de usuario almacenado en AsyncStorage.
     const userJSON = await AsyncStorage.getItem('user');
-    const user = JSON.parse(userJSON); // Parsear la cadena JSON a un objeto JavaScript.
-    console.log('Token:', token);
-    console.log('User:', user);
-    // Devolver el token y el objeto de usuario para usarlos en otras partes de tu aplicación.
+    const user = JSON.parse(userJSON); 
     return { token, user };
   } catch (error) {
     console.log(error.message);
@@ -35,7 +24,6 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     const getUserFromStorage = async () => {
       const storedUser = await getStoredUserInfo();
-      console.log(storedUser)
       setUser(storedUser?.user || null)
     };
     getUserFromStorage();
@@ -44,10 +32,8 @@ const CustomDrawerContent = (props) => {
   const clearStoredUserInfo = async () => {
     try {
       await AsyncStorage.removeItem('token');
-      // Eliminar
       await AsyncStorage.removeItem('user');
       alert('User Logged out');
-      console.log('AsyncStorage clean sucessfully');
     } catch (error) {
       console.log('Error al limpiar AsyncStorage:', error.message);
     }
@@ -55,7 +41,7 @@ const CustomDrawerContent = (props) => {
   
   const handleLogout = async () => {
     await clearStoredUserInfo();
-    setUser(null); // Establece el usuario a null para actualizar el contenido del drawer
+    setUser(null);
   };
 
   return (
@@ -66,7 +52,6 @@ const CustomDrawerContent = (props) => {
       </View>
       <DrawerItemList {...props} />
       {user?.photo ? <DrawerItem label="Sign Out" onPress={handleLogout} /> : null}
-      
     </DrawerContentScrollView>
   );
 };
@@ -76,7 +61,7 @@ const isLoggedIn = async () => {
   return !!user; 
 };
 
-const Drawer = createDrawerNavigator()
+const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
@@ -90,35 +75,18 @@ const DrawerNavigator = () => {
   }, []);
 
   return (
-    <>
-      <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-        {!userLoggedIn ? (
-          <>
-          <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='SignUp' component={RegisterScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name="HomeAppliances" component={HomeAppliances} options={{ headerShown: false }}/>
-            <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
-            <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
-            <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />
-            <Drawer.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
-            <Drawer.Screen name="ProductDetailView" component={ProductDetailView} options={{ headerShown: false }} />
-          </>
-        ) : (
-          <>
-          <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-          <Drawer.Screen name="HomeAppliances" component={HomeAppliances} />
-          <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
-          <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
-          <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />
-          <Drawer.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
-          <Drawer.Screen name="ProductDetailView" component={ProductDetailView} options={{ headerShown: false }} />
-          </>
-        )}
-      </Drawer.Navigator>
-    </>
-  )
-}
+    <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
+      {!userLoggedIn && (
+        <>
+          <Drawer.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+          <Drawer.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
+        </>
+      )}
+    </Drawer.Navigator>
+  );
+};
+
 
 export default DrawerNavigator
 
