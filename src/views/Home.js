@@ -123,6 +123,10 @@ export default function HomeScreen(props) {
         navigation.navigate('ProductDetails', { productId });
     };
 
+    const navigateToCarritoPage = () => {
+        navigation.navigate('carritoPage');
+      };
+
     return (
             <ScrollView>
                 <View style={styles.container}>
@@ -131,7 +135,9 @@ export default function HomeScreen(props) {
                             <TouchableOpacity onPress={() => navigation.openDrawer()}>
                                 <AntDesign name="bars" style={styles.menu} />
                             </TouchableOpacity>
-                            <AntDesign name="shoppingcart" style={styles.logo} />
+                            <TouchableOpacity onPress={navigateToCarritoPage}>
+                                <AntDesign  name="shoppingcart" style={styles.logo} />
+                            </TouchableOpacity>
                         </View>
                         <View>
                             <View style={{ position: 'relative', flexDirection: 'row', alignItems: 'center' }}>
