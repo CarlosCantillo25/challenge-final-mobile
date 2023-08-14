@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { api, apiUrl, endpoints } from '../../utils/api'
 import { useRoute } from '@react-navigation/native';
@@ -45,6 +45,7 @@ const ProductDetails = () => {
     navigation.navigate('ProductDetailView', { productId });
   };
 
+
   
   async function clickAddToCart() {
     if (productId && product) {
@@ -69,8 +70,13 @@ const ProductDetails = () => {
     navigation.navigate('carritoPage');
   };
   
+
+  const handleGoBack = () => {
+    navigation.navigate('Home');
+  };
+
+
   return (
-    <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
       <View style={styles.container}>
         <View style={styles.navbar}>
           <View style={styles.nav1}>
@@ -104,7 +110,7 @@ const ProductDetails = () => {
                 </View>
                 <View style={styles.container5}>
                   <TouchableOpacity onPress={() => navigateToProductDetailView(productId)}>
-                    <Text style={styles.text2}>View Details</Text>
+                    <Text style={styles.text2}>Technical characteristics</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.container4}>
@@ -115,9 +121,11 @@ const ProductDetails = () => {
               </View>
             </View>
           )}
+          <TouchableOpacity style={styles.buttonBack} onPress={handleGoBack}>
+            <Text style={styles.back}>GO TO BACK</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
-    </ImageBackground>
   )
 }
 
@@ -128,13 +136,10 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingTop: 20,
   },
-  imageBackground: {
-      flex: 1,
-      resizeMode: "cover", 
-  },
   navbar: {
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+    backgroundColor: '#007BFF',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   nav1: {
       flexDirection: 'row',
@@ -239,4 +244,17 @@ const styles = StyleSheet.create({
     padding: 4,
     borderRadius: 2
   },
+  back: {
+    color: 'white',
+    fontSize: 18,
+    backgroundColor: 'black',
+    width: 150,
+    textAlign: 'center',
+    padding: 10,
+    borderRadius: 10
+  },
+  buttonBack: {
+    alignSelf: 'center',
+    marginBottom: 20
+  }
 })

@@ -4,12 +4,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from 'react-redux';
 import productsActions from "../../redux/actions/productsActions";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import { ImageBackground, StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -109,16 +109,14 @@ export default function HomeScreen() {
         setSearchText(text);
     };
 
-    const navigateHomeAppliancePage = () => {
-        navigation.navigate('HomeAppliances');
-    };
+  
 
     const navigateGamersPage = () => {
         navigation.navigate('GamersPage');
     };
 
     const navigateTechPage = () => {
-        navigation.navigate('TechsPage');
+        props.navigation.navigate('TechsPage');
     };
 
     const navigateToProductDetails = (productId) => {
@@ -130,11 +128,10 @@ export default function HomeScreen() {
       };
 
     return (
-        <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.navbar}>
-                        <View style={styles.nav1}>
+                        <View style={styles.nav1}> 
                             <TouchableOpacity onPress={() => navigation.openDrawer()}>
                                 <AntDesign name="bars" style={styles.menu} />
                             </TouchableOpacity>
@@ -172,7 +169,7 @@ export default function HomeScreen() {
                         </View>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={navigateHomeAppliancePage} style={styles.button}>
+                        <TouchableOpacity  onPress={()=>props.navigation.navigate('Home&Appliances')} style={styles.button}>
                             <Image source={require('../../assets/iconAppliances.png')} style={styles.buttonIcon} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={navigateGamersPage} style={styles.button}>
@@ -183,7 +180,7 @@ export default function HomeScreen() {
                         </TouchableOpacity>
                     </View>
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
-                        <Text style={{ fontSize: 20, color: 'white'  }}>More views on Phones & tabs</Text>
+                        <Text style={{ fontSize: 20  }}>More views on Phones & tabs</Text>
                         <ScrollView horizontal>
                             <ScrollView horizontal>
                                 {currentPhones.map((item, index) => (
@@ -201,7 +198,7 @@ export default function HomeScreen() {
                         </ScrollView>
                     </View>
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
-                        <Text style={{ fontSize: 20, color: 'white'  }}>More views on Desktops & Notebooks</Text>
+                        <Text style={{ fontSize: 20  }}>More views on Desktops & Notebooks</Text>
                         <ScrollView horizontal>
                             <ScrollView horizontal>
                                 {currentDesktop.map((item, index) => (
@@ -219,7 +216,7 @@ export default function HomeScreen() {
                         </ScrollView>
                     </View>
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
-                        <Text style={{ fontSize: 20, color: 'white'  }}>More views on Gamers</Text>
+                        <Text style={{ fontSize: 20  }}>More views on Gamers</Text>
                         <ScrollView horizontal>
                             <ScrollView horizontal>
                                 {currentGamers.map((item, index) => (
@@ -237,7 +234,7 @@ export default function HomeScreen() {
                         </ScrollView>
                     </View>
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
-                        <Text style={{ fontSize: 20, color: 'white'  }}>More views on Audio & Video</Text>
+                        <Text style={{ fontSize: 20  }}>More views on Audio & Video</Text>
                         <ScrollView horizontal>
                             <ScrollView horizontal>
                                 {currentAudio.map((item, index) => (
@@ -255,7 +252,7 @@ export default function HomeScreen() {
                         </ScrollView>
                     </View>
                     <View style={{ paddingVertical: 16, paddingHorizontal: 10, marginTop: 32 }}>
-                        <Text style={{ fontSize: 20, color: 'white'  }}>More views on Appliances</Text>
+                        <Text style={{ fontSize: 20  }}>More views on Appliances</Text>
                         <ScrollView horizontal>
                             <ScrollView horizontal>
                                 {currentElectro.map((item, index) => (
@@ -274,20 +271,17 @@ export default function HomeScreen() {
                     </View>
                 </View>
             </ScrollView>
-        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: 'white',
         flex: 1,
         paddingTop: 20,
     },
-    imageBackground: {
-        flex: 1,
-        resizeMode: "cover", 
-    },
     navbar: {
+        backgroundColor: '#007BFF',
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
@@ -320,7 +314,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        backgroundColor: '#FFFBEB',
+        backgroundColor: '#F2F6FD',
     },
     button: {
         padding: 10,
@@ -337,7 +331,7 @@ const styles = StyleSheet.create({
     carouselItem: {
         justifyContent: 'justify-center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: '#F2F6FD',
         height: 300,
         width: 200,
         borderRadius: 10,
