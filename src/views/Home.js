@@ -9,7 +9,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -109,16 +109,14 @@ export default function HomeScreen() {
         setSearchText(text);
     };
 
-    const navigateHomeAppliancePage = () => {
-        navigation.navigate('HomeAppliances');
-    };
+  
 
     const navigateGamersPage = () => {
         navigation.navigate('GamersPage');
     };
 
     const navigateTechPage = () => {
-        navigation.navigate('TechsPage');
+        props.navigation.navigate('TechsPage');
     };
 
     const navigateToProductDetails = (productId) => {
@@ -165,7 +163,7 @@ export default function HomeScreen() {
                         </View>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity onPress={navigateHomeAppliancePage} style={styles.button}>
+                        <TouchableOpacity  onPress={()=>props.navigation.navigate('Home&Appliances')} style={styles.button}>
                             <Image source={require('../../assets/iconAppliances.png')} style={styles.buttonIcon} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={navigateGamersPage} style={styles.button}>
