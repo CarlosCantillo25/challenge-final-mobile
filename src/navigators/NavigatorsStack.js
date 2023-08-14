@@ -1,14 +1,20 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from '../views/Home.js';
-import Register from '../views/Register.js';
-
+import DrawerNavigator from './NavigatorsDrawer.js';
+import HomeAppliances from '../views/HomeAppliances.js';
+import TechsPage from '../views/TechsPage.js';
+import GamersPage from '../views/GamersPage.js';
 const Stack = createStackNavigator();
-
 const StackNavigator = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+            headerShown:false
+           }}>
             <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Register" component={Register} />
+            <Stack.Screen name="RegisterScreen" component={DrawerNavigator} />
+            <Stack.Screen name="Home&Appliances" component={HomeAppliances} />
+            <Stack.Screen name="TechsPage" component={TechsPage} />
+            <Stack.Screen name="GamersPage" component={GamersPage}/>
         </Stack.Navigator>
     )
 }
