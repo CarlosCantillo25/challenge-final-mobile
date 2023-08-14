@@ -5,24 +5,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeScreen from '../views/Home';
 import RegisterScreen from '../views/Register';
 import LoginScreen from '../views/Login';
-import HomeAppliances from '../views/HomeAppliances';
-import TechsPage from '../views/TechsPage';
-import GamersPage from '../views/GamersPage';
-import ControlPanel from '../views/ControlPanel'
-import ResultProducts from '../views/ResultProducts'
-import ProductDetails from '../views/ProductDetails'
 import StackNavigator from './NavigatorsStack';
 
 const getStoredUserInfo = async () => {
   try {
-    // Obtener el token almacenado en AsyncStorage.
     const token = await AsyncStorage.getItem('token');
-    // Obtener el objeto de usuario almacenado en AsyncStorage.
     const userJSON = await AsyncStorage.getItem('user');
-    const user = JSON.parse(userJSON); // Parsear la cadena JSON a un objeto JavaScript.
-    console.log('Token:', token);
-    console.log('User:', user);
-    // Devolver el token y el objeto de usuario para usarlos en otras partes de tu aplicación.
+    const user = JSON.parse(userJSON);
     return { token, user };
   } catch (error) {
     console.log(error.message);
@@ -36,7 +25,6 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     const getUserFromStorage = async () => {
       const storedUser = await getStoredUserInfo();
-      console.log(storedUser)
       setUser(storedUser?.user || null)
     };
     getUserFromStorage();
@@ -56,7 +44,7 @@ const CustomDrawerContent = (props) => {
   
   const handleLogout = async () => {
     await clearStoredUserInfo();
-    setUser(null); // Establece el usuario a null para actualizar el contenido del drawer
+    setUser(null);
   };
 
   return (
@@ -95,15 +83,13 @@ const DrawerNavigator = () => {
       <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
         {!userLoggedIn ? (
           <>
-          <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
+            <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
             <Drawer.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
+            <Drawer.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
             </>
         ) : (
           <>
-          <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-          <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
+          <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
           </>
         )}
       </Drawer.Navigator>
