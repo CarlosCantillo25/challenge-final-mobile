@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState , useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const HomeAppliances = (props) => {
+
 const dispatch=useDispatch()
 const [currentPage, setCurrentPage] = useState(
   parseInt(AsyncStorage.getItem('currentPageAppliances')) || 1 //le digo que mi estado inicial sea 1 o que sea el numero almacenado en el local storage
@@ -46,12 +46,11 @@ setCurrentPage(currentPage - 1)
  </View>
  <View style={styles.cont_images}>
  {datos?.map((element) => (
- <TouchableHighlight >
+ <TouchableHighlight onPress={()=>props.navigation.navigate('Detail', {productId:element._id})}  >
   <View style={styles.card}>
   <Image source={{ uri: element.cover_photo[0] }} style={styles.productImage} key={element._id}/>
   <Text>{element.title}</Text>
-  <Text>{element.price}</Text>
-  <Text>Withdraw it NOW!</Text>
+  <Text>USD${element.price}</Text>
   </View>
   
 </TouchableHighlight>
@@ -109,8 +108,9 @@ title:{
   textAlign:'center'
 },
 productImage:{
-  width:100,
-  height:100
+  width:110,
+  height:80,
+  objectFit:'contain'
 },
 boton:{
   width:70,
