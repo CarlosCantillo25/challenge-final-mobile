@@ -8,7 +8,6 @@ import LoginScreen from '../views/Login';
 import HomeAppliances from '../views/HomeAppliances';
 import TechsPage from '../views/TechsPage';
 import GamersPage from '../views/GamersPage';
-import ControlPanel from '../views/ControlPanel'
 import ResultProducts from '../views/ResultProducts'
 import ProductDetails from '../views/ProductDetails'
 import ProductDetailView from '../views/ProductDetailView';
@@ -98,7 +97,6 @@ const DrawerNavigator = () => {
           <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
             <Drawer.Screen name='SignUp' component={RegisterScreen} options={{ headerShown: false }} />
             <Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
             <Drawer.Screen name="HomeAppliances" component={HomeAppliances} options={{ headerShown: false }}/>
             <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
             <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
@@ -109,7 +107,6 @@ const DrawerNavigator = () => {
         ) : (
           <>
           <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-          <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
           <Drawer.Screen name="HomeAppliances" component={HomeAppliances} />
           <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
           <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />

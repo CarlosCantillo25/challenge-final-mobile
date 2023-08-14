@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, ScrollView, Image, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableOpacity } from 'react-native'
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { api, apiUrl, endpoints } from '../../utils/api'
 import { useRoute } from '@react-navigation/native';
@@ -30,7 +30,6 @@ const ProductDetailView = () => {
 };
 
   return (
-    <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
       <View style={styles.container}>
         <View style={styles.navbar}>
           <View style={styles.nav1}>
@@ -159,7 +158,6 @@ const ProductDetailView = () => {
           </View>
         </ScrollView>
       </View>
-    </ImageBackground>
   )
 }
 
@@ -170,13 +168,10 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingTop: 20,
   },
-  imageBackground: {
-      flex: 1,
-      resizeMode: "cover", 
-  },
   navbar: {
-      flexDirection: 'column',
-      justifyContent: 'space-between',
+    backgroundColor: '#007BFF',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
   },
   nav1: {
       flexDirection: 'row',
@@ -256,9 +251,10 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontWeight: '700',
-    fontSize: 16,
+    fontSize: 22,
     color: 'gray',
     margin: 22,
+    textAlign: 'center'
   },
   container6: {
     margin: 2,

@@ -2,17 +2,8 @@ import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { showMessage } from "react-native-flash-message";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import menu from '../../assets/icono-menu.png';
 
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    StyleSheet,
-    ScrollView,
-    Image,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image,} from "react-native";
 
 export default function RegisterScreen(props) {
 
@@ -60,11 +51,12 @@ export default function RegisterScreen(props) {
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.navbar}>
-                    <TouchableOpacity onPress={() => props.navigation.openDrawer()}>
-                    <AntDesign name="bars" style={styles.logo} />
-                        
-                    </TouchableOpacity>
-                    <AntDesign name="shoppingcart" style={styles.logo} />
+                    <View style={styles.nav1}>
+                        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                            <AntDesign name="bars" style={styles.menu} />
+                        </TouchableOpacity>
+                        <AntDesign name="shoppingcart" style={styles.logo} />
+                    </View>
                 </View>
                 <View style={styles.content}>
                     <View style={styles.formContainer}>
@@ -97,7 +89,7 @@ export default function RegisterScreen(props) {
                                 navigation.navigate("Login");
                             }}
                         >
-                            <Text style={styles.link}>Sin up</Text>
+                            <Text style={styles.link}> Sign up</Text>
                         </TouchableOpacity>
                     </Text>
 
@@ -122,20 +114,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     navbar: {
+        backgroundColor: '#007BFF',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    nav1: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingTop: 20,
+        paddingHorizontal: 30,
+        paddingTop: 10,
     },
     logo: {
-        width: 54,
-        height: 32,
-        resizeMode: 'contain',
+        width: 55,
+        height: 55,
+        fontSize: 40,
+        color: 'white'
     },
     menu: {
         width: 55,
         height: 55,
+        fontSize: 40,
+        color: 'white'
     },
     content: {
         flex: 1,
@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     formContainer: {
-        width: "100%",
+        width: "80%",
+        marginTop: "20%",
     },
     label: {
         fontWeight: "bold",
@@ -157,14 +158,14 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 2,
-        borderColor: "#448cdf",
+        borderColor: "#007BFF",
         borderRadius: 10,
         paddingVertical: 5,
         paddingHorizontal: 10,
         marginBottom: 10,
     },
     registerButton: {
-        backgroundColor: "#448cdf",
+        backgroundColor: "#007BFF",
         paddingVertical: 10,
         borderRadius: 30,
         alignItems: "center",
@@ -180,6 +181,6 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     link: {
-        color: "#448cdf",
+        color: "#007BFF",
     },
 });
