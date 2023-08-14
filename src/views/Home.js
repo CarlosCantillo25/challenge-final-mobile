@@ -125,6 +125,10 @@ export default function HomeScreen() {
         navigation.navigate('ProductDetails', { productId });
     };
 
+    const navigateToCarritoPage = () => {
+        navigation.navigate('carritoPage');
+      };
+
     return (
         <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
             <ScrollView>
@@ -134,7 +138,9 @@ export default function HomeScreen() {
                             <TouchableOpacity onPress={() => navigation.openDrawer()}>
                                 <AntDesign name="bars" style={styles.menu} />
                             </TouchableOpacity>
-                            <AntDesign name="shoppingcart" style={styles.logo} />
+                            <TouchableOpacity onPress={navigateToCarritoPage}>
+                                <AntDesign  name="shoppingcart" style={styles.logo} />
+                            </TouchableOpacity>
                         </View>
                         <View>
                             <View style={{ position: 'relative', flexDirection: 'row', alignItems: 'center' }}>

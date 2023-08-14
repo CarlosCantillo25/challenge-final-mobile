@@ -4,6 +4,8 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { api, apiUrl, endpoints } from '../../utils/api'
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage  from '@react-native-async-storage/async-storage';
+
 
 
 const ProductDetails = () => {
@@ -43,6 +45,30 @@ const ProductDetails = () => {
     navigation.navigate('ProductDetailView', { productId });
   };
 
+  
+  async function clickAddToCart() {
+    if (productId && product) {
+      try {
+        let currentCart = await AsyncStorage.getItem('product_cart');
+        currentCart = currentCart ? JSON.parse(currentCart) : [];
+  
+        if (!Array.isArray(currentCart)) {
+          currentCart = []; // Si currentCart no es un array válido, lo inicializamos como un array vacío
+        }
+  
+        currentCart.push(productId);
+        await AsyncStorage.setItem('product_cart', JSON.stringify(currentCart));
+  
+        console.log('Producto agregado al carrito:', productId);
+      } catch (error) {
+        console.error('Error al agregar al carrito:', error);
+      }
+    }
+  }
+  const navigateToCarritoPage = () => {
+    navigation.navigate('carritoPage');
+  };
+  
   return (
     <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
       <View style={styles.container}>
@@ -51,7 +77,10 @@ const ProductDetails = () => {
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <AntDesign name="bars" style={styles.menu} />
             </TouchableOpacity>
-            <AntDesign name="shoppingcart" style={styles.logo} />
+            
+            <TouchableOpacity onPress={navigateToCarritoPage}>
+              <AntDesign  name="shoppingcart" style={styles.logo} />
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollView>
@@ -79,7 +108,7 @@ const ProductDetails = () => {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.container4}>
-                  <TouchableOpacity>
+                  <TouchableOpacity onPress={ ()=>clickAddToCart(productId)}  >
                     <Text style={styles.text1}>ADD TO CART</Text>
                   </TouchableOpacity>
                 </View>
