@@ -29,6 +29,10 @@ const ProductDetailView = () => {
     navigation.navigate('ProductDetails', { productId });
 };
 
+
+const navigateToCarritoPage = () => {
+  navigation.navigate('carritoPage');
+};
   return (
       <View style={styles.container}>
         <View style={styles.navbar}>
@@ -36,7 +40,9 @@ const ProductDetailView = () => {
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <AntDesign name="bars" style={styles.menu} />
             </TouchableOpacity>
-            <AntDesign name="shoppingcart" style={styles.logo} />
+            <TouchableOpacity onPress={navigateToCarritoPage}>
+              <AntDesign  name="shoppingcart" style={styles.logo} />
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollView>

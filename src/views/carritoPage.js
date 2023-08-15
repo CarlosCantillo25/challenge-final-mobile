@@ -20,13 +20,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
      dispatch(productsActions.read_products());
      async function loadCartData() {
        try {
-         let storedCartProductIds = await AsyncStorage.getItem('product_cart') ;
+          let storedCartProductIds = await AsyncStorage.getItem('product_cart') ;
           storedCartProductIds= storedCartProductIds ? JSON.parse(storedCartProductIds):[]
-         const countObj = {};
+          const countObj = {};
          
          if (!Array.isArray(storedCartProductIds)) {
           storedCartProductIds = []; 
-        }
+          }
           storedCartProductIds?.forEach(id => {
            if (countObj[id]) {
              countObj[id]++;
@@ -73,6 +73,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
   const removeFromCart = async (productId) => {
     const updatedCountObj = { ...productCount };
     delete updatedCountObj[productId];
+    
     setProductCount(updatedCountObj);
     setCartProductIds(cartProductIds.filter(id => id !== productId));
     try {
@@ -81,6 +82,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
       console.error('Error removing from cart:', error);
     }
   };
+  
   
 
   

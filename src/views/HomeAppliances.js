@@ -26,6 +26,10 @@ function handleNext(){
 function handlePrev(){
 setCurrentPage(currentPage - 1)
 }
+
+const navigateToCarritoPage = () => {
+  props.navigation.navigate('carritoPage');
+};
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
@@ -34,7 +38,9 @@ setCurrentPage(currentPage - 1)
           <TouchableOpacity onPress={()=>props.navigation.toggleDrawer()}>
           <AntDesign name="bars" style={styles.menu}/>
           </TouchableOpacity>
-          <AntDesign name="shoppingcart" style={styles.logo} />
+          <TouchableOpacity onPress={navigateToCarritoPage}>
+            <AntDesign  name="shoppingcart" style={styles.logo} />
+          </TouchableOpacity>
       </View>
   </View>
   <Image source={appliancess} style={styles.banner}/>
