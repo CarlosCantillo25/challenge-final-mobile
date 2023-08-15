@@ -16,7 +16,7 @@ const StackNavigator = () => {
             <Stack.Screen name="Home&Appliances" component={HomeAppliances} />
             <Stack.Screen name="TechsPage" component={TechsPage} />
             <Stack.Screen name="GamersPage" component={GamersPage}/>
-            <Stack.Screen name="Detail" component={ProductDetails}/>
+            <Stack.Screen name="ProductDetails" component={ProductDetails}/>
         </Stack.Navigator>
     )
 }

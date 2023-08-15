@@ -8,17 +8,11 @@ import LoginScreen from '../views/Login';
 import HomeAppliances from '../views/HomeAppliances';
 import TechsPage from '../views/TechsPage';
 import GamersPage from '../views/GamersPage';
-import ControlPanel from '../views/ControlPanel'
 import ResultProducts from '../views/ResultProducts'
 import ProductDetails from '../views/ProductDetails'
-
-
 import ProductDetailView from '../views/ProductDetailView';
 import CarritoPage from '../views/carritoPage';
-
 import StackNavigator from './NavigatorsStack';
-
-
 
 const getStoredUserInfo = async () => {
   try {
@@ -29,7 +23,7 @@ const getStoredUserInfo = async () => {
     const user = JSON.parse(userJSON); // Parsear la cadena JSON a un objeto JavaScript.
     console.log('Token:', token);
     console.log('User:', user);
-    // Devolver el token y el objeto de usuario para usarlos en otras partes de tu aplicación.
+    // Devolver el token y el objeto de usuario para usarlos en otras partes de tu aplicaciÃ³n.
     return { token, user };
   } catch (error) {
     console.log(error.message);
@@ -106,31 +100,29 @@ const DrawerNavigator = () => {
      }} />}>
         {!userLoggedIn ? (
           <>
-          <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
+            <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
+              <Drawer.Screen name='Register' component={RegisterScreen} options={{ headerShown: false }} />
+<Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
+              
+              <Drawer.Screen name="Home&Appliances" component={HomeAppliances} options={{ headerShown: false }}/>
+              <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
+              <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
+              <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />
+              <Drawer.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
+              <Drawer.Screen name="ProductDetailView" component={ProductDetailView} options={{ headerShown: false }} />
+              <Drawer.Screen name="carritoPage" component={CarritoPage} options={{ headerShown: false }} />
+            
 
 
-            <Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
-            <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
-            <Drawer.Screen name="HomeAppliances" component={HomeAppliances} options={{ headerShown: false }}/>
-            <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
-            <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
-            <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />
-            <Drawer.Screen name="ProductDetails" component={ProductDetails} options={{ headerShown: false }} />
-            <Drawer.Screen name="ProductDetailView" component={ProductDetailView} options={{ headerShown: false }} />
-            <Drawer.Screen name="carritoPage" component={CarritoPage} options={{ headerShown: false }} />
-          </>
-
-
-            <Drawer.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
-            </>
+              <Drawer.Screen name='Login' component={LoginScreen} options={{ headerShown: false }} />
+        </>
 
         ) : (
           <>
 
 
           <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-          <Drawer.Screen name='ControlPanel' component={ControlPanel} options={{ headerShown: false }} />
+         
 
           <Drawer.Screen name="HomeAppliances" component={HomeAppliances} />
           <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
@@ -140,9 +132,7 @@ const DrawerNavigator = () => {
           <Drawer.Screen name="ProductDetailView" component={ProductDetailView} options={{ headerShown: false }} />
           <Drawer.Screen name="carritoPage" component={CarritoPage} options={{ headerShown: false }} />
 
-
-          <Drawer.Screen name='Home' component={StackNavigator} options={{ headerShown: false }} />
-</>
+      </>
         )}
       </Drawer.Navigator>
     </>
