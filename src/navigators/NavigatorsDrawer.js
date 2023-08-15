@@ -13,7 +13,6 @@ import ResultProducts from '../views/ResultProducts'
 import ProductDetails from '../views/ProductDetails'
 import ProductDetailView from '../views/ProductDetailView';
 import CarritoPage from '../views/carritoPage';
-import StackNavigator from './NavigatorsStack';
 
 const getStoredUserInfo = async () => {
   try {
@@ -111,7 +110,7 @@ const DrawerNavigator = () => {
         ) : (
           <>
           <Drawer.Screen name='Home' component={HomeScreen} options={{ headerShown: false }} />
-          <Drawer.Screen name="Home&Appliances" component={HomeAppliances} />
+          <Drawer.Screen name="Home&Appliances" component={HomeAppliances} options={{ headerShown: false }} />
           <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
           <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
           <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />

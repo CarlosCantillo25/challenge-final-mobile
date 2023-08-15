@@ -7,6 +7,7 @@ import { useState , useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Footer from '../components/Footer';
 import NavbarSearch from '../components/navbarSearch';
+
 const HomeAppliances = (props) => {
 
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const HomeAppliances = (props) => {
  <View style={styles.cont_images}>
  {datos?.map((element) => (
 
- <TouchableHighlight onPress={()=>props.navigation.navigate('ProductDetails', {productId:element._id})}  >
+ <TouchableHighlight key={element._id} onPress={()=>props.navigation.navigate('ProductDetails',  {productId:element._id})}  >
 
   <View style={styles.card}>
   <Image source={{ uri: element.cover_photo[0] }} style={styles.productImage} key={element._id}/>
