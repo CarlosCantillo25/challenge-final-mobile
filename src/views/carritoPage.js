@@ -6,11 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 
-
-
-
-
- export default function CarritoPage() {
+export default function CarritoPage() {
 
    const navigation = useNavigation();
    const dispatch = useDispatch();

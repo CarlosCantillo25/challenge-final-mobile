@@ -7,8 +7,8 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
-
-
+import logo from '../../assets/logo2.png'
+import Footer from "../components/Footer";
 export default function HomeScreen(props) {
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -135,6 +135,9 @@ export default function HomeScreen(props) {
                             <TouchableOpacity onPress={() => navigation.openDrawer()}>
                                 <AntDesign name="bars" style={styles.menu} />
                             </TouchableOpacity>
+                            <TouchableOpacity  onPress={() => navigation.navigate('Home')}>
+                            <Image style={styles.logotipo} source={logo}/>
+                            </TouchableOpacity>
                             <TouchableOpacity onPress={navigateToCarritoPage}>
                                 <AntDesign  name="shoppingcart" style={styles.logo} />
                             </TouchableOpacity>
@@ -142,7 +145,7 @@ export default function HomeScreen(props) {
                         <View>
                             <View style={{ position: 'relative', flexDirection: 'row', alignItems: 'center' }}>
                                 <TextInput style={styles.searchInput} placeholder="Find what you are looking for..." value={searchTerm} onChangeText={(text) => setSearchTerm(text)} />
-                                <TouchableOpacity style={{ position: 'absolute', right: 20 }} onPress={() => { setIsModalOpen(true); handleSearchClick(); }} >
+                                <TouchableOpacity style={{ position: 'absolute', right: 20, backgroundColor:'gray',padding:10.8}} onPress={() => { setIsModalOpen(true); handleSearchClick(); }} >
                                     <Ionicons name="search-outline" size={24} color="#fff" />
                                 </TouchableOpacity>
                             </View>
@@ -270,6 +273,7 @@ export default function HomeScreen(props) {
                         </ScrollView>
                     </View>
                 </View>
+                <Footer/>
             </ScrollView>
     );
 }
@@ -278,7 +282,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         flex: 1,
-        paddingTop: 20,
     },
     navbar: {
         backgroundColor: '#007BFF',
@@ -314,7 +317,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        backgroundColor: '#F2F6FD',
+        backgroundColor: '#FFFBEB',
     },
     button: {
         padding: 10,
@@ -332,8 +335,8 @@ const styles = StyleSheet.create({
         justifyContent: 'justify-center',
         alignItems: 'center',
         backgroundColor: '#F2F6FD',
-        height: 300,
-        width: 200,
+        height: 260,
+        width: 176,
         borderRadius: 10,
         padding: 16,
         alignItems: 'center',
@@ -341,7 +344,11 @@ const styles = StyleSheet.create({
     },
     carouselImage: {
         width: 150,
-        height: 150,
+        height: 80,
         resizeMode: 'contain',
     },
+    logotipo:{
+        width:100,
+        height:80
+    }
 });
