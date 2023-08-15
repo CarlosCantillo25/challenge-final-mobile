@@ -4,8 +4,9 @@ import { View, Text, Image, ScrollView, TouchableOpacity, ImageBackground, Style
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Importa AsyncStorage
 import AntDesign from "react-native-vector-icons/AntDesign";
-
-export default function ResultProducts() {
+import logo from '../../assets/logo2.png'
+import NavbarSearch from '../components/navbarSearch';
+export default function ResultProducts(props) {
   const read_products = useSelector((store) => store.products.products);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -41,42 +42,30 @@ export default function ResultProducts() {
     navigation.navigate('carritoPage');
   };
   return (
-    <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
-      <View style={styles.container}>
-        <View style={styles.navbar}>
-          <View style={styles.nav1}>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <AntDesign name="bars" style={styles.menu} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToCarritoPage}>
-               <AntDesign  name="shoppingcart" style={styles.logo} />
-            </TouchableOpacity>
-          </View>
-        </View>
+    <View style={styles.container}>
+        <NavbarSearch/>
         <View style={{ flex: 1, paddingTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{ fontSize: 22, color:'white', marginBottom: 20 }}>Search Results for: {searchQuery}</Text>
+          <Text style={{ fontSize: 22, color:'gray', marginBottom: 20 }}>Search Results for: {searchQuery}</Text>
           <ScrollView>
-            <View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: 50 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', flexWrap:'wrap', gap:10}}>
               {filteredProducts.map((product) => (
                 <TouchableOpacity key={product._id} style={styles.cardItem} onPress={() => navigateToProduct(product._id)} >
                   <Image source={{ uri: product.cover_photo[0] }} style={styles.cardImage} />
-                  <Text style={{ color: 'gray', fontSize: 18, fontWeight: 'bold', marginHorizontal: 10 }}>{product.title}</Text>
-                  <Text style={{ fontSize: 18, fontWeight: 'bold', margin: 10 }}>USD$ {product.price}</Text>
-                  <Text style={{ color: '#5ea85e', fontWeight: 'bold', fontSize: 20 , margin: 10 }}>Withdraw it NOW!</Text>
-                </TouchableOpacity>
+                  <Text style={{ color: 'gray', fontSize: 12, fontWeight: 'bold', marginHorizontal: 10 }}>{product.title}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: 'bold', margin: 10 }}>USD$ {product.price}</Text>
+                  </TouchableOpacity>
               ))}
             </View>
           </ScrollView>
         </View>
       </View>
-    </ImageBackground>
+    
   );
 }
 
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      paddingTop: 20,
   },
   imageBackground: {
       flex: 1,
@@ -85,13 +74,14 @@ const styles = StyleSheet.create({
   navbar: {
       flexDirection: 'column',
       justifyContent: 'space-between',
+      backgroundColor: '#007BFF',
+      padding:10
   },
   nav1: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: 30,
-      paddingTop: 10,
+      paddingHorizontal: 10,
   },
   logo: {
       width: 55,
@@ -127,19 +117,27 @@ const styles = StyleSheet.create({
       resizeMode: 'contain',
   },
   cardItem: {
-      justifyContent: 'justify-center',
-      alignItems: 'center',
-      backgroundColor: 'white',
-      width: '90%',
-      borderRadius: 10,
-      padding: 16,
-      alignItems: 'center',
-      margin: 10,
+    flexDirection:'column',
+    justifyContent:'center',
+    textAlign:'center',
+    padding:8,
+    alignItems:'center',
+    backgroundColor:'#F2F6FD',
+    height:230,
+    borderRadius:10,
+    borderColor:'gray',
+    borderStyle:'solid',
+    borderWidth:1,
+    width:180,
+    gap:5
   },
   cardImage: {
-      resizeMode: 'contain',
-      width: 250,
-      height: 250,
-      marginBottom: 10
+    width:110,
+    height:80,
+    objectFit:'contain'
   },
+  logotipo:{
+    width:100,
+    height:80
+  }
 })

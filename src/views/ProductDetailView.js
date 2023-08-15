@@ -5,6 +5,7 @@ import { api, apiUrl, endpoints } from '../../utils/api'
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import NavbarSearch from '../components/navbarSearch';
 
 const ProductDetailView = () => {
 
@@ -55,16 +56,7 @@ const navigateToCarritoPage = () => {
 };
   return (
       <View style={styles.container}>
-        <View style={styles.navbar}>
-          <View style={styles.nav1}>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <AntDesign name="bars" style={styles.menu} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToCarritoPage}>
-              <AntDesign  name="shoppingcart" style={styles.logo} />
-            </TouchableOpacity>
-          </View>
-        </View>
+       <NavbarSearch/>
         <ScrollView>
           {product && (
             <View>
@@ -192,7 +184,7 @@ export default ProductDetailView
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      paddingTop: 20,
+     
   },
   navbar: {
     backgroundColor: '#007BFF',

@@ -6,7 +6,9 @@ import productsActions from '../../redux/actions/productsActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState , useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import logo from '../../assets/logo2.png'
+import Footer from '../components/Footer';
+import Navbar from '../components/navbarSearch.js'
 const GamersPage = (props) => {
   const dispatch=useDispatch()
   const [currentPage, setCurrentPage] = useState(
@@ -32,16 +34,7 @@ const GamersPage = (props) => {
     return (
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-     <View style={styles.navbar}>
-            <View style={styles.nav1}>
-            <TouchableOpacity onPress={()=>props.navigation.toggleDrawer()}>
-            <AntDesign name="bars" style={styles.menu}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={navigateToCarritoPage}>
-              <AntDesign  name="shoppingcart" style={styles.logo} />
-            </TouchableOpacity>
-        </View>
-    </View>
+      <Navbar/>
     <Image source={Gamers} style={styles.banner}/>
     <Text style={styles.title}>Gamers</Text>
    <View style={styles.cont_buton}>
@@ -67,6 +60,7 @@ const GamersPage = (props) => {
     <TouchableHighlight onPress={handleNext} disabled={ gamers.nextPage === null} style={styles.boton}><Text>Next page</Text></TouchableHighlight>
    </View>
   </View>
+  <Footer/>
   </ScrollView>
     )
   }
@@ -148,7 +142,7 @@ card:{
   textAlign:'center',
   padding:8,
   alignItems:'center',
-  backgroundColor:'white',
+  backgroundColor:'#F2F6FD',
   height:210,
   borderRadius:10,
   borderColor:'gray',
@@ -160,4 +154,8 @@ scrollContainer: {
   flexGrow: 1,
   backgroundColor: 'white', // Ajusta el color de fondo según tus necesidades
 },
+logotipo:{
+  width:100,
+  height:80
+}
 })
