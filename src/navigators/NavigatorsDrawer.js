@@ -112,7 +112,7 @@ const DrawerNavigator = () => {
 
               <Drawer.Screen name='Sign In' component={LoginScreen} options={{ headerShown: false }} />
               
-              <Drawer.Screen name="Home&Appliancesnp" component={HomeAppliances} options={{ headerShown: false }}/>
+              <Drawer.Screen name="Home&Appliances" component={HomeAppliances} options={{ headerShown: false }}/>
               <Drawer.Screen name="GamersPage" component={GamersPage} options={{ headerShown: false }} />
               <Drawer.Screen name="TechsPage" component={TechsPage} options={{ headerShown: false }} />
               <Drawer.Screen name="ResultProducts" component={ResultProducts} options={{ headerShown: false }} />
