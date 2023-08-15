@@ -9,28 +9,30 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import logo from '../../assets/logo2.png'
 import Footer from '../components/Footer';
 import NavbarSearch from '../components/navbarSearch';
+
 const TechsPage = (props) => {
-  const dispatch=useDispatch()
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(AsyncStorage.getItem('currentPageTechs')) || 1 //le digo que mi estado inicial sea 1 o que sea el numero almacenado en el local storage
-  );
+  
+  const dispatch = useDispatch();
+  const currentPageKey = 'currentPageTechs';
+  const initialPage = parseInt(AsyncStorage.getItem(currentPageKey)) || 1;
   const techs = useSelector((store) => store.products.techs);
-  const datos= techs.products;
-  const page=currentPage //page va a ser el estado dinamico del current page para hacer referencia a que pagina vamos a navegar
+  const datos = techs.products;
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const page = currentPage;
+
   useEffect(() => {
-  AsyncStorage.setItem('currentPageTechs', currentPage);
-  dispatch(productsActions.read_pag_techs(page)) //le vamos a dar un parametro que indica la pagina (page)
-  },[page ]);
-  function handleNext(){
-    setCurrentPage(currentPage + 1)
-   }
-  function handlePrev(){
-  setCurrentPage(currentPage - 1)
+    AsyncStorage.setItem(currentPageKey, currentPage.toString());
+    dispatch(productsActions.read_pag_techs(page));
+  }, [page]);
+
+  function handleNext() {
+    setCurrentPage(currentPage + 1);
   }
 
-  const navigateToCarritoPage = () => {
-    props.navigation.navigate('carritoPage');
-  };
+  function handlePrev() {
+    setCurrentPage(currentPage - 1);
+  }
+
     return (
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>

@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import productsActions from '../../redux/actions/productsActions';
 import { View, Text, Image, TouchableOpacity ,ScrollView, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
-import AntDesign from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
+import NavbarSearch from '../components/navbarSearch';
 
 export default function CarritoPage() {
 
@@ -90,16 +90,7 @@ export default function CarritoPage() {
   
   return (
     <ScrollView>
-          <View style={styles.navbar}>
-                    <View style={styles.nav1}>
-                        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                            <AntDesign name="bars" style={styles.menu} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonBack} onPress={handleGoBack}>
-                          <Text style={styles.back}>GO TO BACK</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+          <NavbarSearch/>
       <View style={{ backgroundColor: '#f0eeee', paddingVertical: 20}}>
         <Text style={{ marginLeft: 20, color: '#5a5858', fontSize: 30 }}>
         Productos en el carrito:

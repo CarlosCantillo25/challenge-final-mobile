@@ -1,37 +1,34 @@
-import { ImageBackground, StyleSheet, Text, View, Image, TouchableOpacity, Button, TouchableHighlight, ScrollView} from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableHighlight, ScrollView} from 'react-native'
 import React from 'react'
 import appliancess from '../../assets/appliances.jpg'
-import AntDesign from "react-native-vector-icons/AntDesign";
 import productsActions from '../../redux/actions/productsActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState , useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import logo from '../../assets/logo2.png'
 import Footer from '../components/Footer';
 import NavbarSearch from '../components/navbarSearch';
 const HomeAppliances = (props) => {
 
-const dispatch=useDispatch()
-const [currentPage, setCurrentPage] = useState(
-  parseInt(AsyncStorage.getItem('currentPageAppliances')) || 1 //le digo que mi estado inicial sea 1 o que sea el numero almacenado en el local storage
-);
-const appliances = useSelector((store) => store.products.appliances);
-const datos= appliances.products;
-const page=currentPage //page va a ser el estado dinamico del current page para hacer referencia a que pagina vamos a navegar
-useEffect(() => {
-AsyncStorage.setItem('currentPageAppliances', currentPage);
-dispatch(productsActions.read_pag_appliances(page)) //le vamos a dar un parametro que indica la pagina (page)
-},[page ]);
-function handleNext(){
-  setCurrentPage(currentPage + 1)
- }
-function handlePrev(){
-setCurrentPage(currentPage - 1)
-}
-
-const navigateToCarritoPage = () => {
-  props.navigation.navigate('carritoPage');
-};
+  const dispatch = useDispatch();
+  const currentPageKey = 'currentPageAppliances'; 
+  const initialPage = parseInt(AsyncStorage.getItem(currentPageKey)) || 1;
+  const appliances = useSelector((store) => store.products.appliances);
+  const datos = appliances.products;
+  const [currentPage, setCurrentPage] = useState(initialPage); 
+  const page = currentPage;
+  
+  useEffect(() => {
+    AsyncStorage.setItem(currentPageKey, currentPage.toString()); 
+    dispatch(productsActions.read_pag_appliances(page));
+  }, [page]);
+  
+  function handleNext() {
+    setCurrentPage(currentPage + 1);
+  }
+  
+  function handlePrev() {
+    setCurrentPage(currentPage - 1);
+  }
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
