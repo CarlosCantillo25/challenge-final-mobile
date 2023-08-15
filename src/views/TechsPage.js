@@ -27,10 +27,15 @@ const TechsPage = (props) => {
   function handlePrev(){
   setCurrentPage(currentPage - 1)
   }
+
+  const navigateToCarritoPage = () => {
+    props.navigation.navigate('carritoPage');
+  };
     return (
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
      <NavbarSearch/>
+
     <Image source={tech} style={styles.banner}/>
     <Text style={styles.title}>Techs</Text>
    <View style={styles.cont_buton}>

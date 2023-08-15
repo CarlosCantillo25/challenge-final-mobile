@@ -38,6 +38,9 @@ export default function ResultProducts(props) {
     navigation.navigate('ProductDetails', { productId });
   };
 
+  const navigateToCarritoPage = () => {
+    navigation.navigate('carritoPage');
+  };
   return (
     <View style={styles.container}>
         <NavbarSearch/>

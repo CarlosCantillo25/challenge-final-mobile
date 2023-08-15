@@ -18,13 +18,14 @@ export default function CarritoPage() {
      dispatch(productsActions.read_products());
      async function loadCartData() {
        try {
-         let storedCartProductIds = await AsyncStorage.getItem('product_cart') ;
+          let storedCartProductIds = await AsyncStorage.getItem('product_cart') ;
           storedCartProductIds= storedCartProductIds ? JSON.parse(storedCartProductIds):[]
-         const countObj = {};
-         
+          const countObj = {};
+          
+          
          if (!Array.isArray(storedCartProductIds)) {
           storedCartProductIds = []; 
-        }
+          }
           storedCartProductIds?.forEach(id => {
            if (countObj[id]) {
              countObj[id]++;
@@ -32,6 +33,7 @@ export default function CarritoPage() {
              countObj[id] = 1;
            }
          }); 
+         
          setCartProductIds(storedCartProductIds);
          setProductCount(countObj);
        } catch (error) {
@@ -42,7 +44,7 @@ export default function CarritoPage() {
    }, [dispatch]);
  
   const cartProducts = read_products.filter(product => cartProductIds.includes(product._id));
-   
+  console.log(cartProductIds);
   
   const calculateTotalAmount = () => {
     let total = 0;
@@ -71,6 +73,7 @@ export default function CarritoPage() {
   const removeFromCart = async (productId) => {
     const updatedCountObj = { ...productCount };
     delete updatedCountObj[productId];
+    
     setProductCount(updatedCountObj);
     setCartProductIds(cartProductIds.filter(id => id !== productId));
     try {
@@ -83,7 +86,6 @@ export default function CarritoPage() {
   const handleGoBack = () => {
     navigation.navigate('Home');
   };
-  
 
   
   return (

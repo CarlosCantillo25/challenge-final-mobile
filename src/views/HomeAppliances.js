@@ -28,10 +28,15 @@ function handleNext(){
 function handlePrev(){
 setCurrentPage(currentPage - 1)
 }
+
+const navigateToCarritoPage = () => {
+  props.navigation.navigate('carritoPage');
+};
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
     <View style={styles.container}>
    <NavbarSearch/>
+
   <Image source={appliancess} style={styles.banner}/>
   <Text style={styles.title}>Home & Appliances</Text>
  <View style={styles.cont_buton}>
@@ -41,7 +46,9 @@ setCurrentPage(currentPage - 1)
  </View>
  <View style={styles.cont_images}>
  {datos?.map((element) => (
+
  <TouchableHighlight onPress={()=>props.navigation.navigate('ProductDetails', {productId:element._id})}  >
+
   <View style={styles.card}>
   <Image source={{ uri: element.cover_photo[0] }} style={styles.productImage} key={element._id}/>
   <Text>{element.title}</Text>

@@ -104,7 +104,7 @@ const ProductDetails = () => {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.container4}>
-                  <TouchableOpacity onPress={ ()=>clickAddToCart(productId)}  >
+                  <TouchableOpacity onPress={ ()=>clickAddToCart()}  >
                     <Text style={styles.text1}>ADD TO CART</Text>
                   </TouchableOpacity>
                 </View>
