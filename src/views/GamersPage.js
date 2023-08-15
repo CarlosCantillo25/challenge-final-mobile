@@ -8,6 +8,7 @@ import { useState , useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import logo from '../../assets/logo2.png'
 import Footer from '../components/Footer';
+import Navbar from '../components/navbarSearch.js'
 const GamersPage = (props) => {
   const dispatch=useDispatch()
   const [currentPage, setCurrentPage] = useState(
@@ -29,19 +30,8 @@ const GamersPage = (props) => {
     return (
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-     <View style={styles.navbar}>
-            <View style={styles.nav1}>
-            <TouchableOpacity onPress={()=>props.navigation.toggleDrawer()}>
-            <AntDesign name="bars" style={styles.menu}/>
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={() => props.navigation.navigate('Home')}>
-                <Image style={styles.logotipo} source={logo}/>
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={() => props.navigation.navigate('carritoPage')}>
-              <AntDesign name="shoppingcart" style={styles.logo} />
-            </TouchableOpacity>
-        </View>
-    </View>
+      <Navbar/>
+    
     <Image source={Gamers} style={styles.banner}/>
     <Text style={styles.title}>Gamers</Text>
    <View style={styles.cont_buton}>

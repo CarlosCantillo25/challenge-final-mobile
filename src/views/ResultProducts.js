@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Importa AsyncStorage
 import AntDesign from "react-native-vector-icons/AntDesign";
 import logo from '../../assets/logo2.png'
+import NavbarSearch from '../components/navbarSearch';
 export default function ResultProducts(props) {
   const read_products = useSelector((store) => store.products.products);
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,17 +40,7 @@ export default function ResultProducts(props) {
 
   return (
     <View style={styles.container}>
-        <View style={styles.navbar}>
-          <View style={styles.nav1}>
-            <TouchableOpacity onPress={() => navigation.openDrawer()}>
-              <AntDesign name="bars" style={styles.menu} />
-            </TouchableOpacity>
-            <TouchableOpacity  onPress={() => props.navigation.navigate('Home')}>
-              <Image style={styles.logotipo} source={logo}/>
-          </TouchableOpacity>
-            <AntDesign name="shoppingcart" style={styles.logo} />
-          </View>
-        </View>
+        <NavbarSearch/>
         <View style={{ flex: 1, paddingTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
           <Text style={{ fontSize: 22, color:'gray', marginBottom: 20 }}>Search Results for: {searchQuery}</Text>
           <ScrollView>

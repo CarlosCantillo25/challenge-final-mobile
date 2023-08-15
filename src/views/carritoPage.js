@@ -3,14 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import productsActions from '../../redux/actions/productsActions';
 import { View, Text, Image, TouchableOpacity ,ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
-
-
-
-
-
-
-
- export default function CarritoPage() {
+import NavbarSearch from '../components/navbarSearch';
+export default function CarritoPage() {
    const dispatch = useDispatch();
    const [cartProductIds, setCartProductIds] = useState([]);
    const [productCount, setProductCount] = useState({});
@@ -86,6 +80,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
   
   return (
     <ScrollView>
+      <NavbarSearch/>
       <View style={{ backgroundColor: '#f0eeee', paddingVertical: 20}}>
         <Text style={{ marginLeft: 20, color: '#5a5858', fontSize: 30 }}>
         Productos en el carrito:
