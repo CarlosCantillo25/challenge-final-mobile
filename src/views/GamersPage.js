@@ -51,7 +51,7 @@ const GamersPage = (props) => {
    </View>
    <View style={styles.cont_images}>
    {datos?.map((element) => (
-   <TouchableHighlight >
+   <TouchableHighlight onPress={()=>props.navigation.navigate('ProductDetails', {productId:element._id})} >
     <View style={styles.card}>
     <Image source={{ uri: element.cover_photo[0] }} style={styles.productImage} key={element._id}/>
     <Text>{element.title}</Text>

@@ -8,15 +8,13 @@ import ProductDetails from '../views/ProductDetails.js';
 const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
-        <Stack.Navigator screenOptions={{
-            headerShown:false
-           }}>
+        <Stack.Navigator screenOptions={{ headerShown:false }}>
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="RegisterScreen" component={DrawerNavigator} />
             <Stack.Screen name="Home&Appliances" component={HomeAppliances} />
             <Stack.Screen name="TechsPage" component={TechsPage} />
             <Stack.Screen name="GamersPage" component={GamersPage}/>
-            <Stack.Screen name="Detail" component={ProductDetails}/>
+            <Stack.Screen name="ProductDetails" component={ProductDetails}/>
         </Stack.Navigator>
     )
 }

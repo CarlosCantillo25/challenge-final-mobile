@@ -52,7 +52,9 @@ const navigateToCarritoPage = () => {
  </View>
  <View style={styles.cont_images}>
  {datos?.map((element) => (
- <TouchableHighlight onPress={()=>props.navigation.navigate('productDetails', {productId:element._id})}  >
+
+ <TouchableHighlight onPress={()=>props.navigation.navigate('ProductDetails', {productId:element._id})}  >
+
   <View style={styles.card}>
   <Image source={{ uri: element.cover_photo[0] }} style={styles.productImage} key={element._id}/>
   <Text>{element.title}</Text>

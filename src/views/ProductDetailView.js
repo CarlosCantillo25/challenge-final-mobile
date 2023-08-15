@@ -4,6 +4,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import { api, apiUrl, endpoints } from '../../utils/api'
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProductDetailView = () => {
 
@@ -29,6 +30,25 @@ const ProductDetailView = () => {
     navigation.navigate('ProductDetails', { productId });
 };
 
+async function clickAddToCart() {
+  if (productId && product) {
+    try {
+      let currentCart = await AsyncStorage.getItem('product_cart');
+      currentCart = currentCart ? JSON.parse(currentCart) : [];
+
+      if (!Array.isArray(currentCart)) {
+        currentCart = []; // Si currentCart no es un array válido, lo inicializamos como un array vacío
+      }
+
+      currentCart.push(productId);
+      await AsyncStorage.setItem('product_cart', JSON.stringify(currentCart));
+
+      console.log('Producto agregado al carrito:', productId);
+    } catch (error) {
+      console.error('Error al agregar al carrito:', error);
+    }
+  }
+}
 
 const navigateToCarritoPage = () => {
   navigation.navigate('carritoPage');
@@ -158,7 +178,7 @@ const navigateToCarritoPage = () => {
             <TouchableOpacity style={styles.buttonBack} onPress={handleGoBack}>
               <Text style={styles.back}>GO TO BACK</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonBack} >
+            <TouchableOpacity onPress={ ()=>clickAddToCart(productId)} style={styles.buttonBack} >
             <Text style={styles.cart}>ADD TO CART</Text>
             </TouchableOpacity>
           </View>

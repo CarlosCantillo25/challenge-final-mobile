@@ -37,6 +37,9 @@ export default function ResultProducts() {
     navigation.navigate('ProductDetails', { productId });
   };
 
+  const navigateToCarritoPage = () => {
+    navigation.navigate('carritoPage');
+  };
   return (
     <ImageBackground source={require('../../assets/backgroundHome.jpg')} style={styles.imageBackground}>
       <View style={styles.container}>
@@ -45,7 +48,9 @@ export default function ResultProducts() {
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <AntDesign name="bars" style={styles.menu} />
             </TouchableOpacity>
-            <AntDesign name="shoppingcart" style={styles.logo} />
+            <TouchableOpacity onPress={navigateToCarritoPage}>
+               <AntDesign  name="shoppingcart" style={styles.logo} />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{ flex: 1, paddingTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
