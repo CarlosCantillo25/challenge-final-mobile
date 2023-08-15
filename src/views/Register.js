@@ -12,7 +12,7 @@ export default function RegisterScreen() {
     const [password, setPassword] = useState("");
     const [photo, setPhoto] = useState("");
     const [isRegistering, setIsRegistering] = useState(false);
-    const [imageUri, setImageUri] = useState(null);
+    const [imageUri, setImageUri] = useState("https://via.placeholder.com/150");
 
     const handleEmailChange = (text) => {
         setEmail(text);
@@ -105,7 +105,7 @@ export default function RegisterScreen() {
                         <Text style={styles.label}>Profile Photo</Text>
                         <TouchableOpacity style={styles.imagePicker} onPress={handleImagePicker} >
                             {imageUri ? (
-                                <Image source={{ uri: imageUri }} style={styles.selectedImage} />
+                                <Image source={{ uri: imageUri }} style={{alignSelf: 'center', height: 150, width: 150}} />       
                             ) : (
                                 <Text style={styles.imagePickerText}>Select Image</Text>
                             )}
