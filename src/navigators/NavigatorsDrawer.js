@@ -16,14 +16,9 @@ import StackNavigator from './NavigatorsStack';
 
 const getStoredUserInfo = async () => {
   try {
-    // Obtener el token almacenado en AsyncStorage.
     const token = await AsyncStorage.getItem('token');
-    // Obtener el objeto de usuario almacenado en AsyncStorage.
     const userJSON = await AsyncStorage.getItem('user');
-    const user = JSON.parse(userJSON); // Parsear la cadena JSON a un objeto JavaScript.
-    console.log('Token:', token);
-    console.log('User:', user);
-    // Devolver el token y el objeto de usuario para usarlos en otras partes de tu aplicaciÃ³n.
+    const user = JSON.parse(userJSON); 
     return { token, user };
   } catch (error) {
     console.log(error.message);
@@ -37,7 +32,6 @@ const CustomDrawerContent = (props) => {
   useEffect(() => {
     const getUserFromStorage = async () => {
       const storedUser = await getStoredUserInfo();
-      console.log(storedUser)
       setUser(storedUser?.user || null)
     };
     getUserFromStorage();

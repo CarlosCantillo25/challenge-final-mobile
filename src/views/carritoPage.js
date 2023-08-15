@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import productsActions from '../../redux/actions/productsActions';
-import { View, Text, Image, TouchableOpacity ,ScrollView} from 'react-native';
+import { View, Text, Image, TouchableOpacity ,ScrollView, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
-import NavbarSearch from '../components/navbarSearch';
+import AntDesign from "react-native-vector-icons/AntDesign";
+import { useNavigation } from "@react-navigation/native";
+
 export default function CarritoPage() {
+
+   const navigation = useNavigation();
    const dispatch = useDispatch();
    const [cartProductIds, setCartProductIds] = useState([]);
    const [productCount, setProductCount] = useState({});
@@ -75,12 +79,25 @@ export default function CarritoPage() {
       console.error('Error removing from cart:', error);
     }
   };
+
+  const handleGoBack = () => {
+    navigation.navigate('Home');
+  };
   
 
   
   return (
     <ScrollView>
-      <NavbarSearch/>
+          <View style={styles.navbar}>
+                    <View style={styles.nav1}>
+                        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                            <AntDesign name="bars" style={styles.menu} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonBack} onPress={handleGoBack}>
+                          <Text style={styles.back}>GO TO BACK</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
       <View style={{ backgroundColor: '#f0eeee', paddingVertical: 20}}>
         <Text style={{ marginLeft: 20, color: '#5a5858', fontSize: 30 }}>
         Productos en el carrito:
@@ -160,3 +177,39 @@ export default function CarritoPage() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  navbar: {
+      backgroundColor: '#007BFF',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+  },
+  nav1: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: 30,
+      paddingTop: 10,
+  },
+  logo: {
+      width: 55,
+      height: 55,
+      fontSize: 40,
+      color: 'white'
+  },
+  menu: {
+      width: 55,
+      height: 55,
+      fontSize: 40,
+      color: 'white'
+  },
+  back: {
+    color: 'white',
+    fontSize: 18,
+    width: 150,
+    textAlign: 'center',
+    padding: 10,
+    borderRadius: 10,
+    marginTop: -10
+  },
+})
