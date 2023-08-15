@@ -8,33 +8,36 @@ import { useState , useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import logo from '../../assets/logo2.png'
 import Footer from '../components/Footer';
-import Navbar from '../components/navbarSearch.js'
-const GamersPage = (props) => {
-  const dispatch=useDispatch()
-  const [currentPage, setCurrentPage] = useState(
-    parseInt(AsyncStorage.getItem('currentPageGamers')) || 1 //le digo que mi estado inicial sea 1 o que sea el numero almacenado en el local storage
-  );
-  const gamers = useSelector((store) => store.products.gamers);
-  const datos=gamers.products
-  const page=currentPage //page va a ser el estado dinamico del current page para hacer referencia a que pagina vamos a navegar
-  useEffect(() => {
-  AsyncStorage.setItem('currentPageGamers', currentPage);
-  dispatch(productsActions.read_pag_gamers(page)) //le vamos a dar un parametro que indica la pagina (page)
-  },[page ]);
-  function handleNext(){
-    setCurrentPage(currentPage + 1)
-   }
-  function handlePrev(){
-  setCurrentPage(currentPage - 1)
-  }
+import NavbarSearch from '../components/navbarSearch';
 
-  const navigateToCarritoPage = () => {
-    props.navigation.navigate('carritoPage');
-  };
+const GamersPage = (props) => {
+
+  const dispatch = useDispatch();
+  const currentPageKey = 'currentPageGamers'; 
+  const initialPage = parseInt(AsyncStorage.getItem(currentPageKey)) || 1;
+  const gamers = useSelector((store) => store.products.gamers);
+  const datos = gamers.products;
+  const [currentPage, setCurrentPage] = useState(initialPage); 
+  const page = currentPage;
+  
+  useEffect(() => {
+    AsyncStorage.setItem(currentPageKey, currentPage.toString()); 
+    dispatch(productsActions.read_pag_gamers(page));
+  }, [page]);
+  
+  function handleNext() {
+    setCurrentPage(currentPage + 1);
+  }
+  
+  function handlePrev() {
+    setCurrentPage(currentPage - 1);
+  }
+  
+  
     return (
       <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-      <Navbar/>
+      <NavbarSearch/>
     <Image source={Gamers} style={styles.banner}/>
     <Text style={styles.title}>Gamers</Text>
    <View style={styles.cont_buton}>

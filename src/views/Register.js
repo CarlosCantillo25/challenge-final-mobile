@@ -1,98 +1,123 @@
-import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import axios from 'axios';
-import { apiUrl, endpoints } from '../../utils/api';
+import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image } from "react-native";
-import { Permissions, ImagePicker } from "expo";
+import { showMessage } from "react-native-flash-message";
+import { useNavigation } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
+import NavbarSearch from "../components/navbarSearch";
 
-export default function RegisterScreen(props) {
-
+export default function RegisterScreen() {
     const navigation = useNavigation();
     const [email, setEmail] = useState("");
+    const [location, setLocation] = useState("");
     const [password, setPassword] = useState("");
     const [photo, setPhoto] = useState("");
-    const [location, setLocation] = useState("");
+    const [isRegistering, setIsRegistering] = useState(false);
+    const [imageUri, setImageUri] = useState(null);
 
-    const [image, setImage] = useState("https://via.placeholder.com/150");
+    const handleEmailChange = (text) => {
+        setEmail(text);
+    };
+    const handleLocationChange = (text) => {
+        setLocation(text);
+    };
+    const handlePasswordChange = (text) => {
+        setPassword(text);
+    };
 
+    const handleImagePicker = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
 
-    function handleFormSubmit(event){
-        event.preventDefault()
-        
-        if (!email || !photo || !password || !location) {
-          alert('Please complete all fields.');
-          return;
+        if (!result.canceled) {
+            setImageUri(result.assets);
+            if (result.assets.length > 0) {
+                setImageUri(result.assets[0].uri);
+            }
         }
-        
-        const formData = new FormData();
-        formData.append('email', email);
-        formData.append('photo', photo);
-        formData.append('password', password);
-        formData.append('location', location);
+    };
 
-          axios.post(apiUrl + endpoints.register, formData)
-          .then(res => {
-            alert('New user creation successful')
-            navigation.navigate('Login')
-          })
-          .catch(function(error) {
-          console.log(error.response)
-          alert('Something went wrong, try again later')
-        })
-      }
-
-      handleChooseFile = async () => {
-
-        const resultPermission = await Permissions.askAsync(
-            Permissions.CAMERA_ROLL
-        )
-
-        if(resultPermission) {
-            console.log('aaaa')
+    const handleRegisterClick = async () => {
+        if (!email || !location || !password) {
+            showMessage({
+                message: "Error",
+                description: "Please complete all fields.",
+                type: "danger",
+            });
+            return;
         }
-      }
+
+        try {
+            setIsRegistering(true);
+            const response = await fetch(
+                "https://mobile-cggi.onrender.com/api/user/register",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email, location, password, photo: imageUri }),
+                }
+            );
+            const data = await response.json();
+            setIsRegistering(false);
+            showMessage({
+                message: "Success",
+                description: "User registered successfully!",
+                type: "success",
+                animated: true,
+                animationDuration: 800,
+                icon: { icon: "success", position: "right" },
+                style: { paddingVertical: 20, paddingHorizontal: 80 },
+            });
+            navigation.navigate('Sign In');
+            console.log("Success:", data);
+
+        } catch (error) {
+            setIsRegistering(false);
+            showMessage({
+                message: "Error",
+                description: "Something went wrong, please try again later.",
+                type: "danger",
+            });
+            console.log("Error:", error);
+        }
+    };
 
     return (
         <View style={styles.container}>
             <ScrollView>
-                <View style={styles.navbar}>
-                    <View style={styles.nav1}>
-                        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                            <AntDesign name="bars" style={styles.menu} />
-                        </TouchableOpacity>
-                        <AntDesign name="shoppingcart" style={styles.logo} />
-                    </View>
+            <NavbarSearch/>
+                <View style={styles.nav1}>
+                    <Text style={styles.text}>Create your account and buy from wherever you are..</Text>
                 </View>
                 <View style={styles.content}>
                     <View style={styles.formContainer}>
                         <Text style={styles.label}>Email</Text>
-                        <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail}/>
-                        <Text style={styles.label}>Password</Text>
-                        <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry={true} />
-                        <Text style={styles.label}>Photo</Text>
-                        <View>
-                            <TouchableOpacity onPress={handleChooseFile} style={styles.photo}>
-                                <Image style={{alignSelf: 'center', height: 150, width: 150}} source= {{uri: image}}/>
-                            </TouchableOpacity>
-                        </View>
+                        <TextInput style={styles.input} placeholder="Email @" value={email} onChangeText={handleEmailChange} />
+
                         <Text style={styles.label}>Location</Text>
-                        <TextInput style={styles.input} placeholder="Location" value={location} onChangeText={setLocation} />
-                        <TouchableOpacity style={styles.registerButton} onPress={handleFormSubmit} >
+                        <TextInput style={styles.input} placeholder="Location 🗺" value={location} onChangeText={handleLocationChange} />
+
+                        <Text style={styles.label}>Profile Photo</Text>
+                        <TouchableOpacity style={styles.imagePicker} onPress={handleImagePicker} >
+                            {imageUri ? (
+                                <Image source={{ uri: imageUri }} style={styles.selectedImage} />
+                            ) : (
+                                <Text style={styles.imagePickerText}>Select Image</Text>
+                            )}
+                        </TouchableOpacity>
+
+                        <Text style={styles.label}>Password</Text>
+                        <TextInput style={styles.input} placeholder="Password 🔒" value={password}  onChangeText={handlePasswordChange} secureTextEntry={true} />
+
+                        <TouchableOpacity style={styles.registerButton} onPress={handleRegisterClick} disabled={isRegistering} >
                             <Text style={styles.buttonText}>Sign up</Text>
                         </TouchableOpacity>
                     </View>
-                    <Text style={styles.linkText}> Already have an account?
-                        <TouchableOpacity onPress={() => { navigation.navigate("Login"); }}  >
-                            <Text style={styles.link}> Log in</Text>
-                        </TouchableOpacity>
-                    </Text>
-
-                    <Text style={styles.linkText}> Go back to
-                        <TouchableOpacity style={styles.link} onPress={() => { navigation.navigate("Home"); }} >
-                            <Text style={styles.link}> Home page</Text>
-                        </TouchableOpacity>
-                    </Text>
                 </View>
             </ScrollView>
         </View>
@@ -139,7 +164,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
         width: "80%",
-        marginTop: "20%",
+        marginTop: "20%"
     },
     label: {
         fontWeight: "bold",
