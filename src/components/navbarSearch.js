@@ -124,9 +124,13 @@ const navbarSearch = (props) => {
     const navigateToProductDetails = (productId) => {
         navigation.navigate('ProductDetails', { productId });
     };
-
+const user=AsyncStorage.getItem('token')
     const navigateToCarritoPage = () => {
+        if(user){
         navigation.navigate('carritoPage');
+        }else{
+            navigation.navigate('Home');
+        }
       };
 
   
@@ -139,7 +143,7 @@ const navbarSearch = (props) => {
         <TouchableOpacity  onPress={() => navigation.navigate('Home')}>
         <Image style={styles.logotipo} source={logo}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('carritoPage')}>
+        <TouchableOpacity onPress={navigateToCarritoPage}>
             <AntDesign  name="shoppingcart" style={styles.logo} />
         </TouchableOpacity>
     </View>
