@@ -4,6 +4,7 @@ import HomeAppliances from '../views/HomeAppliances.js';
 import TechsPage from '../views/TechsPage.js';
 import GamersPage from '../views/GamersPage.js';
 import ProductDetails from '../views/ProductDetails.js';
+import Splash from '../views/splash.js';
 const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
