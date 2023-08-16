@@ -125,7 +125,7 @@ export default function CarritoPage() {
           >
             <Image
               source={{ uri: product.cover_photo[0] }}
-              style={{ width: '100%', height: 120, marginBottom: 30 }}
+              style={{ width: '100%', height: 120, marginBottom: 30, objectFit: 'contain' }}
             />
             <Text style={{ color: 'gray', marginBottom: 5 }}>{product.title}</Text>
             <Text style={{ color: 'gray', fontSize: 16, marginBottom: 10 }}>
@@ -162,7 +162,7 @@ export default function CarritoPage() {
       </View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
         <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
-          Monto Total: UDS${ calculateTotalAmount() }
+          Monto Total: USD${ calculateTotalAmount() }
         </Text>
       </View>
       
